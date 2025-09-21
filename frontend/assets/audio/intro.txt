@@ -1,0 +1,19 @@
+Chào mừng bạn đến với Từ Điển Đa Ngữ. 
+
+Đây là ứng dụng được thiết kế đặc biệt cho người khiếm thị.
+
+Ứng dụng hỗ trợ tra cứu từ vựng giữa 8 ngôn ngữ phổ biến. Bao gồm: Tiếng Việt, English, 日本語, 한국어, 中文, Français, Deutsch, và Español.
+
+Để sử dụng ứng dụng, bạn có thể:
+
+Nhấn phím D để chuyển đến trang tra từ điển.
+
+Nhấn phím P để phát lại audio giới thiệu này.
+
+Nhấn phím H để xem danh sách phím tắt đầy đủ.
+
+Sử dụng các nút điều khiển ở góc phải màn hình để điều chỉnh kích thước chữ.
+
+Ứng dụng được thiết kế với giao diện thân thiện. Hỗ trợ screen reader và có thể sử dụng hoàn toàn bằng bàn phím.
+
+Chúc bạn có trải nghiệm tốt với Từ Điển Đa Ngữ!

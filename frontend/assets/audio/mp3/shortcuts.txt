@@ -1,0 +1,1 @@
+Phím tắt hữu ích. Phím D để chuyển đến trang từ điển. Phím H để về trang chủ. Phím G để mở hướng dẫn sử dụng. Phím P để phát hoặc tạm dừng audio. Phím cộng để tăng kích thước chữ. Phím trừ để giảm kích thước chữ. Phím 0 để đặt kích thước chữ về bình thường.

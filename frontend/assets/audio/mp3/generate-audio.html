@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Audio MP3</title>
+</head>
+<body>
+    <h1>Audio Generator</h1>
+    <div id="status">Ready to generate audio files...</div>
+    <div id="progress"></div>
+    
+    <script>
+        // Audio generation script
+        const audioFiles = [
+            { name: 'intro', text: 'Chào mừng đến với hướng dẫn sử dụng Từ Điển Đa Ngữ. Trang này sẽ hướng dẫn bạn cách sử dụng ứng dụng một cách hiệu quả nhất.' },
+            { name: 'basic-usage', text: 'Cách sử dụng cơ bản. Nhập từ cần tra cứu vào ô tìm kiếm và chọn ngôn ngữ nguồn và đích. Nhấn nút loa để nghe phát âm của từ vựng. Kiểm tra các từ đã tra cứu trước đó trong phần lịch sử.' },
+            { name: 'shortcuts', text: 'Phím tắt hữu ích. Phím D để chuyển đến trang từ điển. Phím H để về trang chủ. Phím G để mở hướng dẫn sử dụng. Phím P để phát hoặc tạm dừng audio. Phím cộng để tăng kích thước chữ. Phím trừ để giảm kích thước chữ. Phím 0 để đặt kích thước chữ về bình thường.' },
+            { name: 'features', text: 'Tính năng nổi bật. Hỗ trợ 8 ngôn ngữ bao gồm tiếng Việt, tiếng Anh, tiếng Nhật, tiếng Hàn, tiếng Trung, tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha. Phát âm tự động bằng giọng nói tiếng Việt tự nhiên. Lưu trữ 20 từ tra cứu gần nhất. 6 cấp độ kích thước chữ từ nhỏ đến khổng lồ. Thân thiện với screen reader và có thể sử dụng hoàn toàn bằng bàn phím.' },
+            { name: 'tips', text: 'Mẹo sử dụng. Sử dụng phím tắt để điều hướng nhanh chóng và hiệu quả hơn. Luôn nghe phát âm để học cách đọc từ vựng chính xác. Tăng kích thước chữ nếu cần thiết để dễ đọc hơn. Kiểm tra lịch sử để ôn lại các từ đã học.' }
+        ];
+
+        let currentIndex = 0;
+        const statusDiv = document.getElementById('status');
+        const progressDiv = document.getElementById('progress');
+
+        function updateStatus(message) {
+            statusDiv.textContent = message;
+            console.log(message);
+        }
+
+        function updateProgress(index, total) {
+            progressDiv.innerHTML = `Progress: ${index + 1}/${total} (${Math.round((index + 1) / total * 100)}%)`;
+        }
+
+        async function generateAudio(audioFile) {
+            return new Promise((resolve, reject) => {
+                if (!('speechSynthesis' in window)) {
+                    reject('Speech synthesis not supported');
+                    return;
+                }
+
+                // Get Vietnamese voice
+                const voices = window.speechSynthesis.getVoices();
+                let vietnameseVoice = voices.find(voice => 
+                    voice.lang.includes('vi') || 
+                    voice.name.includes('Vietnamese') ||
+                    voice.name.includes('Vietnam')
+                );
+
+                if (!vietnameseVoice) {
+                    vietnameseVoice = voices.find(voice => 
+                        voice.lang.includes('vi-VN') ||
+                        voice.lang.includes('vi')
+                    );
+                }
+
+                const utterance = new SpeechSynthesisUtterance(audioFile.text);
+                utterance.lang = 'vi-VN';
+                utterance.rate = 1.0;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+
+                if (vietnameseVoice) {
+                    utterance.voice = vietnameseVoice;
+                }
+
+                // Create audio context for recording
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const destination = audioContext.createMediaStreamDestination();
+                const mediaRecorder = new MediaRecorder(destination.stream);
+                const chunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    chunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'audio/mp3' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Create download link
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${audioFile.name}.mp3`;
+                    a.click();
+                    
+                    URL.revokeObjectURL(url);
+                    resolve();
+                };
+
+                utterance.onstart = () => {
+                    mediaRecorder.start();
+                };
+
+                utterance.onend = () => {
+                    setTimeout(() => {
+                        mediaRecorder.stop();
+                    }, 500);
+                };
+
+                utterance.onerror = (event) => {
+                    console.error('Speech synthesis error:', event);
+                    reject(event);
+                };
+
+                // Start speaking
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+
+        async function generateAllAudio() {
+            updateStatus('Starting audio generation...');
+            
+            for (let i = 0; i < audioFiles.length; i++) {
+                const audioFile = audioFiles[i];
+                updateStatus(`Generating ${audioFile.name}.mp3...`);
+                updateProgress(i, audioFiles.length);
+                
+                try {
+                    await generateAudio(audioFile);
+                    updateStatus(`Generated ${audioFile.name}.mp3 successfully`);
+                } catch (error) {
+                    updateStatus(`Error generating ${audioFile.name}.mp3: ${error}`);
+                }
+                
+                // Wait a bit between generations
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+            
+            updateStatus('All audio files generated! Check your downloads folder.');
+            updateProgress(audioFiles.length, audioFiles.length);
+        }
+
+        // Start generation when page loads
+        window.addEventListener('load', () => {
+            // Wait for voices to load
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = () => {
+                    setTimeout(generateAllAudio, 1000);
+                };
+            } else {
+                setTimeout(generateAllAudio, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

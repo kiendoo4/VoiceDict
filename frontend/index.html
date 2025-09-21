@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Từ Điển Đa Ngữ</title>
+    <link rel="icon" type="image/png" href="assets/image/icon.png">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/audio-player.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1 class="logo">
+                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                    Từ Điển Đa Ngữ
+                </h1>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active">Trang chủ</a>
+                <a href="pages/dictionary.html" class="nav-link">Tra từ điển</a>
+                <a href="pages/guide.html" class="nav-link">Hướng dẫn sử dụng</a>
+                <a href="#contact" class="nav-link">Liên hệ</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Background Image -->
+    <div class="background-image">
+        <img src="assets/image/background.png" alt="Background" class="bg-img">
+    </div>
+
+    <div class="container">
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h2 class="welcome-title">Chào mừng đến với Từ Điển Đa Ngữ</h2>
+                        <p class="welcome-description">
+                            Ứng dụng từ điển thông minh được thiết kế đặc biệt cho người khiếm thị, 
+                            giúp bạn tra cứu từ vựng một cách dễ dàng và thuận tiện.
+                        </p>
+                    </div>
+                    
+                    <!-- Audio Introduction -->
+                    <div class="audio-section">
+                        <div class="audio-player-container" id="audio-player-home-intro"></div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3>Truy cập nhanh</h3>
+                        <div class="action-buttons">
+                            <button id="go-to-dictionary" class="action-btn primary">
+                                <i class="fas fa-search"></i>
+                                <span>Tra từ điển</span>
+                                <small>Phím D</small>
+                            </button>
+                            <button id="learn-shortcuts" class="action-btn secondary">
+                                <i class="fas fa-keyboard"></i>
+                                <span>Học phím tắt</span>
+                                <small>Phím H</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <h2 class="features-title">Tính năng nổi bật</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Đa ngôn ngữ</h3>
+                        <p>Hỗ trợ 8 ngôn ngữ phổ biến</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <h3>Phát âm</h3>
+                        <p>Nghe phát âm từ vựng</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>Lịch sử</h3>
+                        <p>Lưu trữ từ đã tra cứu</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-universal-access"></i>
+                        </div>
+                        <h3>Hỗ trợ người khiếm thị</h3>
+                        <p>Giao diện hỗ trợ giọng nói, thân thiện với người khiếm thị</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Instructions Section -->
+            <section class="instructions-section">
+                <h2 class="instructions-title">Hướng dẫn sử dụng</h2>
+                <div class="instructions-content">
+                    <div class="instruction-item">
+                        <div class="instruction-number">1</div>
+                        <div class="instruction-text">
+                            <h3>Nhấn phím D</h3>
+                            <p>Để chuyển đến trang tra từ điển</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-number">2</div>
+                        <div class="instruction-text">
+                            <h3>Nhấn phím P</h3>
+                            <p>Để phát/pause audio giới thiệu</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-number">3</div>
+                        <div class="instruction-text">
+                            <h3>Nhấn phím H</h3>
+                            <p>Để xem danh sách phím tắt</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="control-buttons">
+                <button id="decrease-text" class="control-btn" aria-label="Giảm kích thước chữ">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button id="normal-text" class="control-btn" aria-label="Kích thước chữ bình thường">
+                    <i class="fas fa-text-width"></i>
+                </button>
+                <button id="increase-text" class="control-btn" aria-label="Tăng kích thước chữ">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button id="pause-audio" class="control-btn" aria-label="Tạm dừng audio">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Từ Điển Đa Ngữ. Dành cho người khiếm thị.</p>
+                <div class="accessibility-info">
+                    <i class="fas fa-universal-access" aria-hidden="true"></i>
+                    <span>Giao diện thân thiện với người khuyết tật</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Đang tải...</p>
+        </div>
+    </div>
+
+    <!-- Shortcuts Modal -->
+    <div id="shortcuts-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Phím tắt</h2>
+                <button id="close-modal" class="close-btn" aria-label="Đóng">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcut-list" id="shortcut-list">
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-d">D</kbd>
+                        <span>Chuyển đến trang từ điển</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-p">P</kbd>
+                        <span>Phát/pause audio giới thiệu</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-h">H</kbd>
+                        <span>Hiển thị phím tắt</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-g">G</kbd>
+                        <span>Mở hướng dẫn sử dụng</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-c">C</kbd>
+                        <span>Mở trang liên hệ</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Escape</kbd>
+                        <span>Đóng modal</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-plus">+</kbd>
+                        <span>Tăng kích thước chữ</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-minus">-</kbd>
+                        <span>Giảm kích thước chữ</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-zero">0</kbd>
+                        <span>Kích thước chữ bình thường</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd id="shortcut-space">Space</kbd>
+                        <span>Phát/pause audio (trong thanh audio)</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>←</kbd>
+                        <span>Lùi 10 giây (trong thanh audio)</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>→</kbd>
+                        <span>Tiến 10 giây (trong thanh audio)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/audio-player.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

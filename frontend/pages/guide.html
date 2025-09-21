@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Sử Dụng - Từ Điển Đa Ngữ</title>
+    <link rel="stylesheet" href="../css/guide.css">
+    <link rel="stylesheet" href="../css/audio-player.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1 class="logo">
+                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                    Từ Điển Đa Ngữ
+                </h1>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Trang chủ</a>
+                <a href="dictionary.html" class="nav-link">Tra từ điển</a>
+                <a href="guide.html" class="nav-link active">Hướng dẫn sử dụng</a>
+                <a href="#contact" class="nav-link">Liên hệ</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Introduction Section -->
+            <section class="intro-section" data-audio="intro">
+                <div class="intro-content">
+                    <h2 class="section-title">Chào mừng đến với hướng dẫn sử dụng</h2>
+                    <p class="section-description">
+                        Trang này sẽ hướng dẫn bạn cách sử dụng Từ Điển Đa Ngữ một cách hiệu quả nhất.
+                    </p>
+                </div>
+                <div class="audio-player-container" id="audio-player-intro"></div>
+            </section>
+
+            <!-- Basic Usage Section -->
+            <section class="usage-section" data-audio="basic-usage">
+                <h2 class="section-title">Cách sử dụng cơ bản</h2>
+                <div class="usage-grid">
+                    <div class="usage-card">
+                        <div class="usage-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Tìm kiếm từ vựng</h3>
+                        <p>Nhập từ cần tra cứu vào ô tìm kiếm và chọn ngôn ngữ nguồn và đích.</p>
+                    </div>
+                    <div class="usage-card">
+                        <div class="usage-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <h3>Nghe phát âm</h3>
+                        <p>Nhấn nút loa để nghe phát âm của từ vựng bằng giọng nói.</p>
+                    </div>
+                    <div class="usage-card">
+                        <div class="usage-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>Xem lịch sử</h3>
+                        <p>Kiểm tra các từ đã tra cứu trước đó trong phần lịch sử.</p>
+                    </div>
+                </div>
+                <div class="audio-player-container" id="audio-player-basic-usage"></div>
+            </section>
+
+            <!-- Keyboard Shortcuts Section -->
+            <section class="shortcuts-section" data-audio="shortcuts">
+                <h2 class="section-title">Phím tắt</h2>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-group">
+                        <h3>Điều hướng</h3>
+                        <div class="shortcut-list">
+                            <div class="shortcut-item">
+                                <kbd>D</kbd>
+                                <span>Chuyển đến trang từ điển</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>H</kbd>
+                                <span>Về trang chủ</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>G</kbd>
+                                <span>Mở hướng dẫn sử dụng</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shortcut-group">
+                        <h3>Điều khiển âm thanh</h3>
+                        <div class="shortcut-list">
+                            <div class="shortcut-item">
+                                <kbd>P</kbd>
+                                <span>Phát/tạm dừng audio</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Space</kbd>
+                                <span>Tạm dừng tất cả audio</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shortcut-group">
+                        <h3>Kích thước chữ</h3>
+                        <div class="shortcut-list">
+                            <div class="shortcut-item">
+                                <kbd>+</kbd>
+                                <span>Tăng kích thước chữ</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>-</kbd>
+                                <span>Giảm kích thước chữ</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>0</kbd>
+                                <span>Kích thước chữ bình thường</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="audio-player-container" id="audio-player-shortcuts"></div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section" data-audio="features">
+                <h2 class="section-title">Tính năng nổi bật</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-number">1</div>
+                        <div class="feature-content">
+                            <h3>Hỗ trợ 8 ngôn ngữ</h3>
+                            <p>Tiếng Việt, tiếng Anh, tiếng Nhật, tiếng Hàn, tiếng Trung, tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">2</div>
+                        <div class="feature-content">
+                            <h3>Phát âm tự động</h3>
+                            <p>Nghe phát âm từ vựng bằng giọng nói tiếng Việt tự nhiên</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">3</div>
+                        <div class="feature-content">
+                            <h3>Lịch sử tra cứu</h3>
+                            <p>Lưu trữ 20 từ tra cứu gần nhất để tham khảo</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">4</div>
+                        <div class="feature-content">
+                            <h3>Điều chỉnh kích thước</h3>
+                            <p>6 cấp độ kích thước chữ từ nhỏ đến khổng lồ</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">5</div>
+                        <div class="feature-content">
+                            <h3>Hỗ trợ accessibility</h3>
+                            <p>Thân thiện với screen reader và có thể sử dụng hoàn toàn bằng bàn phím</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="audio-player-container" id="audio-player-features"></div>
+            </section>
+
+            <!-- Tips Section -->
+            <section class="tips-section" data-audio="tips">
+                <h2 class="section-title">Mẹo sử dụng</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Phím tắt hữu ích</h3>
+                        <p>Sử dụng phím tắt để điều hướng nhanh chóng và hiệu quả hơn.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-volume-up"></i>
+                        <h3>Nghe phát âm</h3>
+                        <p>Luôn nghe phát âm để học cách đọc từ vựng chính xác.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-text-height"></i>
+                        <h3>Điều chỉnh chữ</h3>
+                        <p>Tăng kích thước chữ nếu cần thiết để dễ đọc hơn.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-history"></i>
+                        <h3>Xem lịch sử</h3>
+                        <p>Kiểm tra lịch sử để ôn lại các từ đã học.</p>
+                    </div>
+                </div>
+                <div class="audio-player-container" id="audio-player-tips"></div>
+            </section>
+        </main>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="control-buttons">
+                <button id="decrease-text" class="control-btn" aria-label="Giảm kích thước chữ">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button id="normal-text" class="control-btn" aria-label="Kích thước chữ bình thường">
+                    <i class="fas fa-text-width"></i>
+                </button>
+                <button id="increase-text" class="control-btn" aria-label="Tăng kích thước chữ">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button id="pause-audio" class="control-btn" aria-label="Tạm dừng audio">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Từ Điển Đa Ngữ. Dành cho người khiếm thị.</p>
+                <div class="accessibility-info">
+                    <i class="fas fa-universal-access" aria-hidden="true"></i>
+                    <span>Giao diện thân thiện với người khuyết tật</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Audio Player -->
+    <audio id="audio-player" preload="none" style="display: none;"></audio>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Đang tải...</p>
+        </div>
+    </div>
+
+    <script src="../js/audio-player.js"></script>
+    <script src="../js/guide.js"></script>
+</body>
+</html>

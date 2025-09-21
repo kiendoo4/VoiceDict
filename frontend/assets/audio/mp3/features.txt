@@ -1,0 +1,1 @@
+Tính năng nổi bật. Hỗ trợ 8 ngôn ngữ bao gồm tiếng Việt, tiếng Anh, tiếng Nhật, tiếng Hàn, tiếng Trung, tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha. Phát âm tự động bằng giọng nói tiếng Việt tự nhiên. Lưu trữ 20 từ tra cứu gần nhất. 6 cấp độ kích thước chữ từ nhỏ đến khổng lồ. Thân thiện với screen reader và có thể sử dụng hoàn toàn bằng bàn phím.
