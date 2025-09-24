@@ -1,1 +1,45 @@
-.venv
+.venv/
+venv/
+.env
+.env.*
+*.env
+
+# Node
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.python-version
+
+# Build outputs
+dist/
+build/
+coverage/
+.cache/
+.parcel-cache/
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
+
+# Generated audio
+frontend/assets/audio/mp3/*.mp3
+backend/assets/audio/
+backend/assets/audio/**
+
+# Temporary
+tmp/
+temp/
+*.tmp
+*.swp

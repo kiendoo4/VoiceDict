@@ -1,6 +1,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 const NodeCache = require('node-cache');
+const axios = require('axios');
+const { gTTS } = require('gtts');
 
 // Cache for 24 hours
 const cache = new NodeCache({ stdTTL: 86400 });
@@ -138,13 +140,36 @@ class AudioController {
 
     // Helper methods
     async generateMockTTS(text, lang, voice) {
-        // Simulate TTS generation delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // In production, this would call actual TTS service
-        // For now, return a mock URL
-        const filename = `tts_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.mp3`;
-        return `/api/audio/file/${filename}`;
+        try {
+            // Create output directory if it doesn't exist
+            const outputDir = path.join(__dirname, '../assets/audio/tts');
+            await fs.mkdir(outputDir, { recursive: true });
+            
+            // Generate filename
+            const filename = `tts_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.mp3`;
+            const filePath = path.join(outputDir, filename);
+            
+            // Use Google TTS
+            const tts = new gTTS(text, lang === 'vi-VN' ? 'vi' : lang);
+            
+            // Save to file
+            await new Promise((resolve, reject) => {
+                tts.save(filePath, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+            
+            return `/api/audio/file/tts/${filename}`;
+        } catch (error) {
+            console.error('Google TTS error:', error);
+            // Fallback to mock URL
+            const filename = `tts_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.mp3`;
+            return `/api/audio/file/${filename}`;
+        }
     }
 
     async generateMockPronunciation(word, lang) {

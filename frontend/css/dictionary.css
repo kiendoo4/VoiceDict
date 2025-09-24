@@ -347,11 +347,19 @@ body {
     color: white;
     border-color: var(--primary-color);
     transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
 .language-option.selected .lang-code,
 .language-option.selected .lang-name {
-    color: white;
+    color: white !important;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.language-option.selected .lang-code {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .lang-code {
@@ -385,6 +393,248 @@ body {
 .language-option:hover .audio-icon {
     opacity: 1;
     color: var(--primary-color);
+}
+
+/* Input Method Options */
+.input-method-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2.5rem 0;
+}
+
+.input-method-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, var(--bg-primary), rgba(255, 255, 255, 0.9));
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.input-method-option:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(37, 99, 235, 0.05));
+}
+
+.input-method-option.selected {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.input-method-option:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.input-method-option i {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+}
+
+.input-method-option:hover i {
+    transform: scale(1.1);
+    color: var(--accent-color);
+}
+
+.input-method-option.selected i {
+    color: white;
+}
+
+.method-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.method-description {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.input-method-option.selected .method-title,
+.input-method-option.selected .method-description {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.input-method-option .audio-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--text-light);
+    font-size: var(--font-size-base);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.input-method-option:hover .audio-icon {
+    opacity: 1;
+}
+
+.input-method-option.selected .audio-icon {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Voice Input Layout */
+.voice-input-container {
+    margin: 2rem 0;
+}
+
+.voice-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+.voice-input-display {
+    width: 100%;
+    max-width: 500px;
+    background: linear-gradient(135deg, var(--bg-primary), rgba(255, 255, 255, 0.9));
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.voice-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.voice-status i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.voice-status.recording i {
+    color: var(--error-color);
+    animation: pulse 1.5s infinite;
+}
+
+.voice-status.processing i {
+    color: var(--warning-color);
+    animation: spin 1s linear infinite;
+}
+
+.voice-status.success i {
+    color: var(--success-color);
+}
+
+.voice-result {
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.voice-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.voice-content {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.voice-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.voice-toggle-btn,
+.voice-search-btn,
+.voice-clear-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--border-radius-lg);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 150px;
+    justify-content: center;
+}
+
+.voice-toggle-btn {
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    color: white;
+}
+
+.voice-toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.voice-toggle-btn.recording {
+    background: linear-gradient(135deg, var(--error-color), #dc2626);
+    animation: pulse 1.5s infinite;
+}
+
+.voice-search-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+}
+
+.voice-search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.voice-clear-btn {
+    background: linear-gradient(135deg, var(--secondary-color), #64748b);
+    color: white;
+}
+
+.voice-clear-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .language-option.selected .audio-icon {
