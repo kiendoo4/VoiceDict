@@ -34,7 +34,7 @@ coverage/
 .vscode/
 
 # Generated audio
-frontend/assets/audio/mp3/*.mp3
+# frontend/assets/audio/mp3/*.mp3
 backend/assets/audio/
 backend/assets/audio/**
 

@@ -1,447 +1,618 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Từ Điển - Từ Điển Đa Ngữ</title>
-    <link rel="stylesheet" href="../css/dictionary.css">
-    <link rel="stylesheet" href="../css/audio-player.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/dictionary.css" />
+    <link rel="stylesheet" href="../css/audio-player.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <h1 class="logo">
-                    <i class="fas fa-book-open" aria-hidden="true"></i>
-                    Từ Điển Đa Ngữ
-                </h1>
-            </div>
-            <div class="nav-menu">
-                <a href="../index.html" class="nav-link">Trang chủ</a>
-                <a href="dictionary.html" class="nav-link active">Tra từ điển</a>
-                <a href="guide.html" class="nav-link">Hướng dẫn sử dụng</a>
-                <a href="#contact" class="nav-link">Liên hệ</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
+      <div class="nav-container">
+        <div class="nav-brand">
+          <h1 class="logo">
+            <i class="fas fa-book-open" aria-hidden="true"></i>
+            Từ Điển Đa Ngữ
+          </h1>
         </div>
+        <div class="nav-menu">
+          <a href="../index.html" class="nav-link">Trang chủ</a>
+          <a href="dictionary.html" class="nav-link active">Tra từ điển</a>
+          <a href="guide.html" class="nav-link">Hướng dẫn sử dụng</a>
+          <a href="#contact" class="nav-link">Liên hệ</a>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </nav>
 
     <div class="container">
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Dictionary Flow Section -->
+        <section class="dictionary-flow-section" role="search">
+          <div class="flow-container">
+            <h2 class="flow-title">Tra từ điển</h2>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Dictionary Flow Section -->
-            <section class="dictionary-flow-section" role="search">
-                <div class="flow-container">
-                    <h2 class="flow-title">Tra từ điển</h2>
-                    
-                    <!-- Progress Indicator -->
-                    <div class="progress-indicator">
-                        <div class="progress-step active" data-step="1">
-                            <div class="step-number">1</div>
-                            <div class="step-label">Chọn ngôn ngữ nguồn</div>
-                        </div>
-                        <div class="progress-step" data-step="2">
-                            <div class="step-number">2</div>
-                            <div class="step-label">Chọn ngôn ngữ đích</div>
-                        </div>
-                        <div class="progress-step" data-step="3">
-                            <div class="step-number">3</div>
-                            <div class="step-label">Chọn cách nhập</div>
-                        </div>
-                        <div class="progress-step" data-step="4">
-                            <div class="step-number">4</div>
-                            <div class="step-label">Nhập từ cần tra</div>
-                        </div>
-                    </div>
-
-                    <!-- Step 1: Source Language Selection -->
-                    <div class="flow-step active" id="step-1" data-step="1">
-                        <div class="step-content">
-                            <h3 class="step-title">Bước 1: Chọn ngôn ngữ nguồn</h3>
-                            <p class="step-description">Nhấn phím số từ 1-8 để chọn ngôn ngữ nguồn, hoặc sử dụng phím mũi tên để di chuyển</p>
-                            
-                            <div class="language-grid">
-                                <button class="language-option" data-lang="vi" data-key="1">
-                                    <span class="lang-code">VI</span>
-                                    <span class="lang-name">Tiếng Việt</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="en" data-key="2">
-                                    <span class="lang-code">EN</span>
-                                    <span class="lang-name">Tiếng Anh</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="ja" data-key="3">
-                                    <span class="lang-code">JA</span>
-                                    <span class="lang-name">Tiếng Nhật</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="ko" data-key="4">
-                                    <span class="lang-code">KO</span>
-                                    <span class="lang-name">Tiếng Hàn</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="zh" data-key="5">
-                                    <span class="lang-code">ZH</span>
-                                    <span class="lang-name">Tiếng Trung</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="fr" data-key="6">
-                                    <span class="lang-code">FR</span>
-                                    <span class="lang-name">Tiếng Pháp</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="de" data-key="7">
-                                    <span class="lang-code">DE</span>
-                                    <span class="lang-name">Tiếng Hà Lan</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="es" data-key="8">
-                                    <span class="lang-code">ES</span>
-                                    <span class="lang-name">Tiếng Tây Ban Nha</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="step-actions">
-                                <button class="back-btn" id="back-from-step1" disabled>
-                                    <i class="fas fa-arrow-left"></i>
-                                    Quay lại
-                                </button>
-                                <div class="step-instructions">
-                                    <p><kbd>1-8</kbd> Chọn ngôn ngữ | <kbd>Enter</kbd> Xác nhận | <kbd>Space</kbd> Audio hướng dẫn | <kbd>H</kbd> Về trang chủ</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Audio Player -->
-                            <div class="audio-section">
-                                <div class="audio-player-container" id="audio-player-dictionary"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 2: Target Language Selection -->
-                    <div class="flow-step" id="step-2" data-step="2">
-                        <div class="step-content">
-                            <h3 class="step-title">Bước 2: Chọn ngôn ngữ đích</h3>
-                            <p class="step-description">Nhấn phím số từ 1-8 để chọn ngôn ngữ đích, hoặc sử dụng phím mũi tên để di chuyển</p>
-                            
-                            <div class="selected-source-lang">
-                                <span>Đang dịch từ: </span>
-                                <strong id="selected-source-lang-name">Tiếng Việt</strong>
-                            </div>
-                            
-                            <div class="language-grid">
-                                <button class="language-option" data-lang="vi" data-key="1">
-                                    <span class="lang-code">VI</span>
-                                    <span class="lang-name">Tiếng Việt</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="en" data-key="2">
-                                    <span class="lang-code">EN</span>
-                                    <span class="lang-name">Tiếng Anh</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="ja" data-key="3">
-                                    <span class="lang-code">JA</span>
-                                    <span class="lang-name">Tiếng Nhật</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="ko" data-key="4">
-                                    <span class="lang-code">KO</span>
-                                    <span class="lang-name">Tiếng Hàn</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="zh" data-key="5">
-                                    <span class="lang-code">ZH</span>
-                                    <span class="lang-name">Tiếng Trung</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="fr" data-key="6">
-                                    <span class="lang-code">FR</span>
-                                    <span class="lang-name">Tiếng Pháp</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="de" data-key="7">
-                                    <span class="lang-code">DE</span>
-                                    <span class="lang-name">Tiếng Hà Lan</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                <button class="language-option" data-lang="es" data-key="8">
-                                    <span class="lang-code">ES</span>
-                                    <span class="lang-name">Tiếng Tây Ban Nha</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="step-actions">
-                                <button class="back-btn" id="back-from-step2">
-                                    <i class="fas fa-arrow-left"></i>
-                                    Quay lại
-                                </button>
-                                <div class="step-instructions">
-                                    <p><kbd>1-8</kbd> Chọn ngôn ngữ | <kbd>Enter</kbd> Xác nhận | <kbd>←</kbd> Quay lại | <kbd>Space</kbd> Audio hướng dẫn | <kbd>H</kbd> Về trang chủ</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Audio Player -->
-                            <div class="audio-section">
-                                <div class="audio-player-container" id="audio-player-dictionary"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Input Method Selection -->
-                    <div class="flow-step" id="step-3" data-step="3">
-                        <div class="step-content">
-                            <h3 class="step-title">Bước 3: Chọn cách nhập từ</h3>
-                            <p class="step-description">Chọn cách bạn muốn nhập từ cần tra cứu</p>
-                            
-                            <div class="translation-info">
-                                <span>Dịch từ </span>
-                                <strong id="translation-from-step3">Tiếng Việt</strong>
-                                <span> sang </span>
-                                <strong id="translation-to-step3">English</strong>
-                            </div>
-                            
-                            <div class="input-method-options">
-                                <button class="input-method-option" data-method="keyboard" data-key="1">
-                                    <i class="fas fa-keyboard" aria-hidden="true"></i>
-                                    <span class="method-title">Nhập bằng bàn phím</span>
-                                    <span class="method-description">Gõ từ cần tra cứu</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                                
-                                <button class="input-method-option" data-method="voice" data-key="2">
-                                    <i class="fas fa-microphone" aria-hidden="true"></i>
-                                    <span class="method-title">Nhập bằng giọng nói</span>
-                                    <span class="method-description">Nói từ cần tra cứu</span>
-                                    <i class="fas fa-volume-up audio-icon" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="step-actions">
-                                <button class="back-btn" id="back-from-step3">
-                                    <i class="fas fa-arrow-left"></i>
-                                    Quay lại
-                                </button>
-                                <div class="step-instructions">
-                                    <p><kbd>1</kbd> Nhập bằng bàn phím | <kbd>2</kbd> Nhập bằng giọng nói | <kbd>Enter</kbd> Xác nhận | <kbd>←</kbd> Quay lại | <kbd>Space</kbd> Audio hướng dẫn | <kbd>H</kbd> Về trang chủ</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Audio Player -->
-                            <div class="audio-section">
-                                <div class="audio-player-container" id="audio-player-dictionary"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4: Word Input -->
-                    <div class="flow-step" id="step-4" data-step="4">
-                        <div class="step-content">
-                            <h3 class="step-title">Bước 4: Nhập từ cần tra</h3>
-                            <p class="step-description" id="step4-description">Nhập từ bạn muốn tra cứu</p>
-                            
-                            <div class="translation-info">
-                                <span>Dịch từ </span>
-                                <strong id="translation-from">Tiếng Việt</strong>
-                                <span> sang </span>
-                                <strong id="translation-to">English</strong>
-                            </div>
-                            
-                            <!-- Keyboard Input Layout -->
-                            <div class="search-input-container keyboard-layout" id="keyboard-layout">
-                                <div class="search-input-wrapper">
-                                    <input 
-                                        type="text" 
-                                        id="search-input" 
-                                        class="search-input" 
-                                        placeholder="Nhập từ cần tra cứu bằng bàn phím..."
-                                        aria-label="Nhập từ cần tra cứu"
-                                        autocomplete="off"
-                                    >
-                                    <button id="search-button" class="search-button" aria-label="Tìm kiếm">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                                
-                                <!-- Quick Search Buttons for Keyboard -->
-                                <div class="quick-search">
-                                    <h4>Tìm kiếm nhanh:</h4>
-                                    <div class="quick-buttons">
-                                        <button class="quick-btn" data-word="hello" data-key="q">Xin chào</button>
-                                        <button class="quick-btn" data-word="thank you" data-key="w">Cảm ơn</button>
-                                        <button class="quick-btn" data-word="goodbye" data-key="e">Tạm biệt</button>
-                                        <button class="quick-btn" data-word="help" data-key="r">Giúp đỡ</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Voice Input Layout -->
-                            <div class="voice-input-container voice-layout" id="voice-layout" style="display: none;">
-                                <div class="voice-input-wrapper">
-                                    <div class="voice-input-display">
-                                        <div class="voice-status" id="voice-status">
-                                            <i class="fas fa-microphone" id="voice-icon"></i>
-                                            <span id="voice-text">Nhấn nút này hoặc phím tắt 'V' để bắt đầu nói</span>
-                                        </div>
-                                        <div class="voice-result" id="voice-result" style="display: none;">
-                                            <span class="voice-label">Bạn đã nói:</span>
-                                            <span class="voice-content" id="voice-content"></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="voice-controls">
-                                        <button id="voice-toggle-button" class="voice-toggle-btn" aria-label="Bắt đầu/Dừng ghi âm">
-                                            <i class="fas fa-microphone" id="voice-toggle-icon"></i>
-                                            <span id="voice-toggle-text">Bắt đầu nói</span>
-                                        </button>
-                                        
-                                        <button id="voice-search-button" class="voice-search-btn" aria-label="Tìm kiếm từ đã nói" style="display: none;">
-                                            <i class="fas fa-search"></i>
-                                            <span>Tìm kiếm</span>
-                                        </button>
-                                        
-                                        <button id="voice-clear-button" class="voice-clear-btn" aria-label="Xóa và bắt đầu lại" style="display: none;">
-                                            <i class="fas fa-times"></i>
-                                            <span>Bắt đầu lại</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-                            <div class="step-actions">
-                                <button class="back-btn" id="back-from-step4">
-                                    <i class="fas fa-arrow-left"></i>
-                                    Quay lại
-                                </button>
-                                <div class="step-instructions">
-                                    <p><kbd>Q-W-E-R</kbd> Tìm kiếm nhanh | <kbd>Enter</kbd> Tìm kiếm | <kbd>←</kbd> Quay lại | <kbd>Space</kbd> Audio hướng dẫn | <kbd>H</kbd> Về trang chủ</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Audio Player -->
-                            <div class="audio-section">
-                                <div class="audio-player-container" id="audio-player-dictionary"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Results Section -->
-            <section class="results-section" id="results-section" style="display: none;">
-                <div class="results-container">
-                    <h2 class="results-title">Kết quả tra cứu</h2>
-                    <div id="results-content" class="results-content">
-                        <!-- Results will be populated here -->
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- Control Panel -->
-        <div class="control-panel">
-            <div class="control-buttons">
-                <button id="decrease-text" class="control-btn" aria-label="Giảm kích thước chữ">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button id="normal-text" class="control-btn" aria-label="Kích thước chữ bình thường">
-                    <i class="fas fa-text-width"></i>
-                </button>
-                <button id="increase-text" class="control-btn" aria-label="Tăng kích thước chữ">
-                    <i class="fas fa-plus"></i>
-                </button>
-                <button id="pause-audio" class="control-btn" aria-label="Tạm dừng audio">
-                    <i class="fas fa-pause"></i>
-                </button>
+            <!-- Progress Indicator -->
+            <div class="progress-indicator">
+              <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Chọn ngôn ngữ nguồn</div>
+              </div>
+              <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Chọn ngôn ngữ đích</div>
+              </div>
+              <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Chọn cách nhập</div>
+              </div>
+              <div class="progress-step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">Nhập từ cần tra</div>
+              </div>
             </div>
+
+            <!-- Step 1: Source Language Selection -->
+            <div class="flow-step active" id="step-1" data-step="1">
+              <div class="step-content">
+                <h3 class="step-title">Bước 1: Chọn ngôn ngữ nguồn</h3>
+                <p class="step-description">
+                  Nhấn phím số từ 1-8 để chọn ngôn ngữ nguồn, hoặc sử dụng phím
+                  mũi tên để di chuyển
+                </p>
+
+                <div class="language-grid">
+                  <button class="language-option" data-lang="vi" data-key="1">
+                    <span class="lang-code">VI</span>
+                    <span class="lang-name">Tiếng Việt</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="en" data-key="2">
+                    <span class="lang-code">EN</span>
+                    <span class="lang-name">Tiếng Anh</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="ja" data-key="3">
+                    <span class="lang-code">JA</span>
+                    <span class="lang-name">Tiếng Nhật</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="ko" data-key="4">
+                    <span class="lang-code">KO</span>
+                    <span class="lang-name">Tiếng Hàn</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="zh" data-key="5">
+                    <span class="lang-code">ZH</span>
+                    <span class="lang-name">Tiếng Trung</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="fr" data-key="6">
+                    <span class="lang-code">FR</span>
+                    <span class="lang-name">Tiếng Pháp</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="de" data-key="7">
+                    <span class="lang-code">DE</span>
+                    <span class="lang-name">Tiếng Đức</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="es" data-key="8">
+                    <span class="lang-code">ES</span>
+                    <span class="lang-name">Tiếng Tây Ban Nha</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                </div>
+
+                <div class="step-actions">
+                  <button class="back-btn" id="back-from-step1" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    Quay lại
+                  </button>
+                  <div class="step-instructions">
+                    <p>
+                      <kbd>1-8</kbd> Chọn ngôn ngữ | <kbd>Enter</kbd> Xác nhận |
+                      <kbd>Space</kbd> Audio hướng dẫn | <kbd>H</kbd> Về trang
+                      chủ
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Audio Player -->
+                <div class="audio-section">
+                  <div
+                    class="audio-player-container"
+                    id="audio-player-dictionary"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Target Language Selection -->
+            <div class="flow-step" id="step-2" data-step="2">
+              <div class="step-content">
+                <h3 class="step-title">Bước 2: Chọn ngôn ngữ đích</h3>
+                <p class="step-description">
+                  Nhấn phím số từ 1-8 để chọn ngôn ngữ đích, hoặc sử dụng phím
+                  mũi tên để di chuyển
+                </p>
+
+                <div class="selected-source-lang">
+                  <span>Đang dịch từ: </span>
+                  <strong id="selected-source-lang-name">Tiếng Việt</strong>
+                </div>
+
+                <div class="language-grid">
+                  <button class="language-option" data-lang="vi" data-key="1">
+                    <span class="lang-code">VI</span>
+                    <span class="lang-name">Tiếng Việt</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="en" data-key="2">
+                    <span class="lang-code">EN</span>
+                    <span class="lang-name">Tiếng Anh</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="ja" data-key="3">
+                    <span class="lang-code">JA</span>
+                    <span class="lang-name">Tiếng Nhật</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="ko" data-key="4">
+                    <span class="lang-code">KO</span>
+                    <span class="lang-name">Tiếng Hàn</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="zh" data-key="5">
+                    <span class="lang-code">ZH</span>
+                    <span class="lang-name">Tiếng Trung</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="fr" data-key="6">
+                    <span class="lang-code">FR</span>
+                    <span class="lang-name">Tiếng Pháp</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="de" data-key="7">
+                    <span class="lang-code">DE</span>
+                    <span class="lang-name">Tiếng Đức</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                  <button class="language-option" data-lang="es" data-key="8">
+                    <span class="lang-code">ES</span>
+                    <span class="lang-name">Tiếng Tây Ban Nha</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                </div>
+
+                <div class="step-actions">
+                  <button class="back-btn" id="back-from-step2">
+                    <i class="fas fa-arrow-left"></i>
+                    Quay lại
+                  </button>
+                  <div class="step-instructions">
+                    <p>
+                      <kbd>1-8</kbd> Chọn ngôn ngữ | <kbd>Enter</kbd> Xác nhận |
+                      <kbd>←</kbd> Quay lại | <kbd>Space</kbd> Audio hướng dẫn |
+                      <kbd>H</kbd> Về trang chủ
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Audio Player -->
+                <div class="audio-section">
+                  <div
+                    class="audio-player-container"
+                    id="audio-player-dictionary"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Input Method Selection -->
+            <div class="flow-step" id="step-3" data-step="3">
+              <div class="step-content">
+                <h3 class="step-title">Bước 3: Chọn cách nhập từ</h3>
+                <p class="step-description">
+                  Chọn cách bạn muốn nhập từ cần tra cứu
+                </p>
+
+                <div class="translation-info">
+                  <span>Dịch từ </span>
+                  <strong id="translation-from-step3">Tiếng Việt</strong>
+                  <span> sang </span>
+                  <strong id="translation-to-step3">English</strong>
+                </div>
+
+                <div class="input-method-options">
+                  <button
+                    class="input-method-option"
+                    data-method="keyboard"
+                    data-key="1"
+                  >
+                    <i class="fas fa-keyboard" aria-hidden="true"></i>
+                    <span class="method-title">Nhập bằng bàn phím</span>
+                    <span class="method-description">Gõ từ cần tra cứu</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+
+                  <button
+                    class="input-method-option"
+                    data-method="voice"
+                    data-key="2"
+                  >
+                    <i class="fas fa-microphone" aria-hidden="true"></i>
+                    <span class="method-title">Nhập bằng giọng nói</span>
+                    <span class="method-description">Nói từ cần tra cứu</span>
+                    <i
+                      class="fas fa-volume-up audio-icon"
+                      aria-hidden="true"
+                    ></i>
+                  </button>
+                </div>
+
+                <div class="step-actions">
+                  <button class="back-btn" id="back-from-step3">
+                    <i class="fas fa-arrow-left"></i>
+                    Quay lại
+                  </button>
+                  <div class="step-instructions">
+                    <p>
+                      <kbd>1</kbd> Nhập bằng bàn phím | <kbd>2</kbd> Nhập bằng
+                      giọng nói | <kbd>Enter</kbd> Xác nhận | <kbd>←</kbd> Quay
+                      lại | <kbd>Space</kbd> Audio hướng dẫn | <kbd>H</kbd> Về
+                      trang chủ
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Audio Player -->
+                <div class="audio-section">
+                  <div
+                    class="audio-player-container"
+                    id="audio-player-dictionary"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Word Input -->
+            <div class="flow-step" id="step-4" data-step="4">
+              <div class="step-content">
+                <h3 class="step-title">Bước 4: Nhập từ cần tra</h3>
+                <p class="step-description" id="step4-description">
+                  Nhập từ bạn muốn tra cứu
+                </p>
+
+                <div class="translation-info">
+                  <span>Dịch từ </span>
+                  <strong id="translation-from">Tiếng Việt</strong>
+                  <span> sang </span>
+                  <strong id="translation-to">English</strong>
+                </div>
+
+                <!-- Keyboard Input Layout -->
+                <div
+                  class="search-input-container keyboard-layout"
+                  id="keyboard-layout"
+                >
+                  <div class="search-input-wrapper">
+                    <input
+                      type="text"
+                      id="search-input"
+                      class="search-input"
+                      placeholder="Nhập từ cần tra cứu bằng bàn phím..."
+                      aria-label="Nhập từ cần tra cứu"
+                      autocomplete="off"
+                    />
+                    <button
+                      id="search-button"
+                      class="search-button"
+                      aria-label="Tìm kiếm"
+                    >
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+
+                  <!-- Quick Search Buttons for Keyboard -->
+                  <div class="quick-search">
+                    <h4>Tìm kiếm nhanh:</h4>
+                    <div class="quick-buttons">
+                      <button class="quick-btn" data-word="hello" data-key="q">
+                        Xin chào
+                      </button>
+                      <button
+                        class="quick-btn"
+                        data-word="thank you"
+                        data-key="w"
+                      >
+                        Cảm ơn
+                      </button>
+                      <button
+                        class="quick-btn"
+                        data-word="goodbye"
+                        data-key="e"
+                      >
+                        Tạm biệt
+                      </button>
+                      <button class="quick-btn" data-word="help" data-key="r">
+                        Giúp đỡ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Voice Input Layout -->
+                <div
+                  class="voice-input-container voice-layout"
+                  id="voice-layout"
+                  style="display: none"
+                >
+                  <div class="voice-input-wrapper">
+                    <div class="voice-input-display">
+                      <div class="voice-status" id="voice-status">
+                        <i class="fas fa-microphone" id="voice-icon"></i>
+                        <span id="voice-text"
+                          >Nhấn nút này hoặc phím tắt 'V' để bắt đầu nói</span
+                        >
+                      </div>
+                      <div
+                        class="voice-result"
+                        id="voice-result"
+                        style="display: none"
+                      >
+                        <span class="voice-label">Bạn đã nói:</span>
+                        <span class="voice-content" id="voice-content"></span>
+                      </div>
+                    </div>
+
+                    <div class="voice-controls">
+                      <button
+                        id="voice-toggle-button"
+                        class="voice-toggle-btn"
+                        aria-label="Bắt đầu/Dừng ghi âm"
+                      >
+                        <i class="fas fa-microphone" id="voice-toggle-icon"></i>
+                        <span id="voice-toggle-text">Bắt đầu nói</span>
+                      </button>
+
+                      <button
+                        id="voice-search-button"
+                        class="voice-search-btn"
+                        aria-label="Tìm kiếm từ đã nói"
+                        style="display: none"
+                      >
+                        <i class="fas fa-search"></i>
+                        <span>Tìm kiếm</span>
+                      </button>
+
+                      <button
+                        id="voice-clear-button"
+                        class="voice-clear-btn"
+                        aria-label="Xóa và bắt đầu lại"
+                        style="display: none"
+                      >
+                        <i class="fas fa-times"></i>
+                        <span>Bắt đầu lại</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-actions">
+                  <button class="back-btn" id="back-from-step4">
+                    <i class="fas fa-arrow-left"></i>
+                    Quay lại
+                  </button>
+                  <div class="step-instructions">
+                    <p>
+                      <kbd>Q-W-E-R</kbd> Tìm kiếm nhanh | <kbd>Enter</kbd> Tìm
+                      kiếm | <kbd>←</kbd> Quay lại | <kbd>Space</kbd> Audio
+                      hướng dẫn | <kbd>H</kbd> Về trang chủ
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Audio Player -->
+                <div class="audio-section">
+                  <div
+                    class="audio-player-container"
+                    id="audio-player-dictionary"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Results Section -->
+        <section
+          class="results-section"
+          id="results-section"
+          style="display: none"
+        >
+          <div class="results-container">
+            <h2 class="results-title">Kết quả tra cứu</h2>
+            <div id="results-content" class="results-content">
+              <!-- Results will be populated here -->
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Control Panel -->
+      <div class="control-panel">
+        <div class="control-buttons">
+          <button
+            id="decrease-text"
+            class="control-btn"
+            aria-label="Giảm kích thước chữ"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button
+            id="normal-text"
+            class="control-btn"
+            aria-label="Kích thước chữ bình thường"
+          >
+            <i class="fas fa-text-width"></i>
+          </button>
+          <button
+            id="increase-text"
+            class="control-btn"
+            aria-label="Tăng kích thước chữ"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+          <button
+            id="pause-audio"
+            class="control-btn"
+            aria-label="Tạm dừng audio"
+          >
+            <i class="fas fa-pause"></i>
+          </button>
         </div>
+      </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <p>&copy; 2024 Từ Điển Đa Ngữ. Dành cho người khiếm thị.</p>
-                <div class="accessibility-info">
-                    <i class="fas fa-universal-access" aria-hidden="true"></i>
-                    <span>Giao diện thân thiện với người khuyết tật</span>
-                </div>
-            </div>
-        </footer>
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <p>&copy; 2024 Từ Điển Đa Ngữ. Dành cho người khiếm thị.</p>
+          <div class="accessibility-info">
+            <i class="fas fa-universal-access" aria-hidden="true"></i>
+            <span>Giao diện thân thiện với người khuyết tật</span>
+          </div>
+        </div>
+      </footer>
     </div>
 
     <!-- Audio Player -->
-    <audio id="audio-player" preload="none" style="display: none;"></audio>
+    <audio id="audio-player" preload="none" style="display: none"></audio>
 
     <!-- Loading Overlay -->
-    <div id="loading-overlay" class="loading-overlay" style="display: none;">
-        <div class="loading-spinner">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>Đang tìm kiếm...</p>
-        </div>
+    <div id="loading-overlay" class="loading-overlay" style="display: none">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Đang tìm kiếm...</p>
+      </div>
     </div>
 
     <!-- Help Modal -->
-    <div id="help-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Trợ giúp</h2>
-                <button id="close-help-modal" class="close-btn" aria-label="Đóng">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="help-content">
-                    <h3>Phím tắt</h3>
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <kbd>Enter</kbd>
-                            <span>Tìm kiếm từ</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>Alt + S</kbd>
-                            <span>Focus vào ô tìm kiếm</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>Alt + H</kbd>
-                            <span>Focus vào lịch sử</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>Escape</kbd>
-                            <span>Ẩn kết quả</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>H</kbd>
-                            <span>Về trang chủ</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>Space</kbd>
-                            <span>Phát/pause audio hướng dẫn</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>←</kbd>
-                            <span>Lùi 10 giây (audio)</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>→</kbd>
-                            <span>Tiến 10 giây (audio)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div id="help-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Trợ giúp</h2>
+          <button id="close-help-modal" class="close-btn" aria-label="Đóng">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="modal-body">
+          <div class="help-content">
+            <h3>Phím tắt</h3>
+            <div class="shortcut-list">
+              <div class="shortcut-item">
+                <kbd>Enter</kbd>
+                <span>Tìm kiếm từ</span>
+              </div>
+              <div class="shortcut-item">
+                <kbd>Alt + S</kbd>
+                <span>Focus vào ô tìm kiếm</span>
+              </div>
+              <div class="shortcut-item">
+                <kbd>Alt + H</kbd>
+                <span>Focus vào lịch sử</span>
+              </div>
+              <div class="shortcut-item">
+                <kbd>Escape</kbd>
+                <span>Ẩn kết quả</span>
+              </div>
+              <div class="shortcut-item">
+                <kbd>H</kbd>
+                <span>Về trang chủ</span>
+              </div>
+              <div class="shortcut-item">
+                <kbd>Space</kbd>
+                <span>Phát/pause audio hướng dẫn</span>
+              </div>
+              <div class="shortcut-item">
+                <kbd>←</kbd>
+                <span>Lùi 10 giây (audio)</span>
+              </div>
+              <div class="shortcut-item">
+                <kbd>→</kbd>
+                <span>Tiến 10 giây (audio)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="../js/audio-player.js"></script>
     <script src="../js/dictionary.js"></script>
-</body>
+  </body>
 </html>
