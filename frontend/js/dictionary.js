@@ -1140,7 +1140,7 @@ class DictionaryApp {
 
     // Auto-play intro audio after initialization
     setTimeout(() => {
-      this.playStepAudio(0); // Play intro audio (index 0)
+      this.playStepAudio(1); // Play intro audio (index 0)
     }, 1000);
   }
 
@@ -1476,7 +1476,7 @@ class DictionaryApp {
 
         // Dictionary guide audio files
         this.audioFiles = [
-          // "dictionary-intro",
+          "dictionary-intro",
           "dictionary-step1",
           "dictionary-step2",
           "dictionary-step3",
