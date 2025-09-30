@@ -41,3 +41,35 @@ def unzip_htmlz(htmlz_path: Path, outdir: Path, stem: str = "index"):
     finally:
         shutil.rmtree(tmpdir, ignore_errors=True)
         htmlz_path.unlink(missing_ok=True)
+
+
+
+
+def mobi_to_html(book_path: Path, outdir: Path):
+   
+    outdir.mkdir(parents=True, exist_ok=True)
+    book_path = book_path.resolve()
+    htmlz_path = outdir / f"{book_path.stem}.htmlz"
+    final_html = outdir / f"{book_path.stem}.html"
+
+    cmd = ["ebook-convert", str(book_path), str(htmlz_path)]
+    print("Running:", " ".join(cmd))
+    res = subprocess.run(cmd, capture_output=True, text=True)
+    if res.returncode != 0:
+        print("❌ Conversion failed")
+        print("STDERR:", res.stderr)
+        return None
+
+    with zipfile.ZipFile(htmlz_path, "r") as zf:
+        names = zf.namelist()
+        index = [n for n in names if n.endswith("index.html")]
+        if not index:
+            raise FileNotFoundError("Không tìm thấy index.html trong htmlz")
+        content = zf.read(index[0])
+        final_html.write_bytes(content)
+
+    htmlz_path.unlink(missing_ok=True)
+
+    print(f"✅ Converted {book_path} -> {final_html}")
+    return final_html
+
