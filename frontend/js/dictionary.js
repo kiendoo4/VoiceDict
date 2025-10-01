@@ -544,11 +544,23 @@ class DictionaryApp {
       let results = null;
 
       const excelPath = `${basePath}${excelFileName}`;
-      console.log(`📂 Trying primary file: ${excelPath}`);
       results = await this.loadFromExcel(excelPath, searchTerm);
 
+      // Nếu có kết quả từ Excel, refine với LLM
       if (results && results.length > 0) {
         console.log(`✅ Found ${results.length} results from Excel files`);
+        // Gửi lên LLM để refine
+        try {
+          const refinedResults = await this.refineResultsWithLLM(results, searchTerm);
+          if (refinedResults && Array.isArray(refinedResults) && refinedResults.length > 0) {
+            results = refinedResults;
+            console.log("✅ Refined results with LLM:", results);
+          } else {
+            console.log("⚠️ LLM did not return better results, using original results.");
+          }
+        } catch (llmError) {
+          console.error("LLM refine error:", llmError);
+        }
         this.displayResults(results);
         this.addToHistory(searchTerm, this.selectedSourceLang, this.selectedTargetLang);
         this.announceToScreenReader(`Tìm thấy ${results.length} kết quả cho từ "${searchTerm}"`);
@@ -597,14 +609,7 @@ class DictionaryApp {
         return null;
       }
 
-      console.log(`🔍 Attempting to load: ${filePath}`);
-      console.log(`📍 Full URL would be: ${new URL(filePath, window.location.href).href}`);
-
       const response = await fetch(filePath);
-      console.log(`📡 Response status: ${response.status} - ${response.statusText}`);
-      console.log(`📡 Response ok: ${response.ok}`);
-      console.log(`📡 Response headers:`, response.headers);
-
       if (!response.ok) {
         console.log(`❌ File not accessible: ${filePath} (${response.status})`);
         return null;
@@ -640,7 +645,6 @@ class DictionaryApp {
       return results;
     } catch (error) {
       console.log(`❌ Error loading Excel: ${error.message}`);
-      console.log(`❌ Error stack:`, error.stack);
       return null;
     }
   }
@@ -1432,13 +1436,9 @@ class DictionaryApp {
     // Store selection - Cập nhật logic này
     if (this.currentStep === 1) {
       this.selectedSourceLang = langCode;
-      console.log("Đã chọn ngôn ngữ nguồn:", langName);
     } else if (this.currentStep === 2) {
       this.selectedTargetLang = langCode;
-      console.log("Đã chọn ngôn ngữ đích:", langName);
     }
-
-    console.log(`Selected language: ${langName} (${langCode}) in step ${this.currentStep}`);
   }
 
   confirmLanguageSelection() {
@@ -1550,10 +1550,6 @@ class DictionaryApp {
 
     // Store selection và log
     this.selectedInputMethod = method;
-    console.log("Đã chọn phương thức nhập:", methodName);
-    console.log("selectedInputMethod now:", this.selectedInputMethod);
-
-    console.log(`Selected input method: ${methodName} (${method}) in step ${this.currentStep}`);
   }
 
   updateSourceLanguageInfo() {
@@ -1745,8 +1741,6 @@ class DictionaryApp {
     // Listen for first user interaction
     document.addEventListener("click", playIntro, { once: true });
     document.addEventListener("keydown", playIntro, { once: true });
-
-    console.log("Dictionary audio ready. Click anywhere or press any key to start auto-play.");
   }
 
   // Mock data method for when files are not accessible
@@ -1769,7 +1763,7 @@ class DictionaryApp {
       "vi-fr": {
         "xin chào": { target: "bonjour", type: "interjection", pronunciation: "/sin tʃaʊ/" },
         "cảm ơn": { target: "merci", type: "interjection", pronunciation: "/kɑmən/" },
-        "tạm biệt": { target: "au revoir", type: "interjection", pronunciation: "/tɑm biət/" },
+        "tạm biệt": { target: "au revoir", type: "interjection", pronunciation: "/tɑm biệt/" },
         bạn: { target: "vous", type: "pronoun", pronunciation: "/bɑn/" },
         tôi: { target: "je", type: "pronoun", pronunciation: "/toj/" },
         nước: { target: "eau", type: "noun", pronunciation: "/nuək/" },
@@ -1778,7 +1772,7 @@ class DictionaryApp {
       "vi-ja": {
         "xin chào": { target: "こんにちは", type: "interjection", pronunciation: "/sin tʃaʊ/" },
         "cảm ơn": { target: "ありがとう", type: "interjection", pronunciation: "/kɑm èn/" },
-        "tạm biệt": { target: "さようなら", type: "interjection", pronunciation: "/tɑm biət/" },
+        "tạm biệt": { target: "さようなら", type: "interjection", pronunciation: "/tɑm biệt/" },
       },
     };
 
@@ -1965,8 +1959,94 @@ class DictionaryApp {
 
     return results.length > 0 ? results : null;
   }
-}
+  async refineResultsWithLLM(results, searchTerm) {
+    const endpoint = "http://localhost:3001/openai";
+    const systemPrompt = `
+Bạn là một trợ lý từ điển thông minh. 
+Dưới đây là kết quả tra cứu gốc (result) cho từ khóa: '${searchTerm}' 
+(từ gốc: ${this.getLanguageName(this.selectedSourceLang)}, ngôn ngữ đích: ${this.getLanguageName(
+      this.selectedTargetLang
+    )}).
 
+Đây là kết quả search local:
+${results}
+
+Nhiệm vụ của bạn:
+2. Nếu "definitions.text" chưa đúng ngôn ngữ đích (${this.getLanguageName(
+      this.selectedTargetLang
+    )}), hãy dịch lại cho đúng.
+3. Giữ lại các kết quả chính xác nhất, ưu tiên exact match. Loại bỏ kết quả trùng lặp hoặc không liên quan.
+4. Sắp xếp kết quả theo mức độ liên quan (exact match trước, partial match sau).
+5. Chỉ giữ tối đa 5 kết quả tốt nhất.
+
+⚠️ Quy tắc cực kỳ quan trọng:
+- "word" luôn phải bằng NGÔN NGỮ ĐÍCH (${this.getLanguageName(
+      this.selectedTargetLang
+    )}), không được giữ nguyên ngôn ngữ gốc.
+- "definitions[].text" phải diễn giải hoặc đưa các từ đồng nghĩa trong NGÔN NGỮ ĐÍCH.
+- "definitions[].example" phải là ví dụ tự nhiên bằng NGÔN NGỮ ĐÍCH, không trộn ngôn ngữ gốc.
+- "definitions[].pronunciation" phải là cách pháp âm của ngôn ngữ đích.
+- "audioUrl" phải là URL phát âm của từ ngữ trong NGÔN NGỮ ĐÍCH.
+- Nếu không chắc 100%, hãy chọn từ/cụm từ phổ biến nhất ở ngôn ngữ đích.
+
+Định dạng đầu ra:
+- Trả về duy nhất một JSON array.
+- Mỗi object phải có thêm field "refined": true
+- Mỗi phần tử gồm: 
+  - word (string, ngôn ngữ đích), 
+  - pronunciation (string hoặc null), 
+  - definitions: array { text, example, partOfSpeech }, 
+  - audioUrl (string hoặc null).
+`;
+
+    const userPrompt = `Kết quả từ điển (JSON):\n${JSON.stringify(results, null, 2)}`;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt },
+          ],
+          temperature: 0.2,
+          max_tokens: 1024,
+          response_format: { type: "json_object" },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("OpenAI API error: " + response.status);
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content?.trim();
+
+      try {
+        if (content.startsWith("[") && content.endsWith("]")) {
+          return JSON.parse(content);
+        }
+      } catch (e) {
+        console.warn("Direct JSON parse fail, fallback regex...");
+      }
+
+      const match = content?.match(/\[.*\]/s);
+      if (match) {
+        return JSON.parse(match[0]);
+      }
+
+      console.warn("⚠️ Không tìm thấy JSON hợp lệ trong response.");
+      return [];
+    } catch (err) {
+      console.error("refineResultsWithLLM error:", err);
+      return [];
+    }
+  }
+}
 // Initialize the app when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   window.app = new DictionaryApp();
