@@ -250,22 +250,25 @@ class HomeApp {
     }
 
     setupFirstAudioPlay() {
-        // Auto-play audio after user interaction
-        const playIntro = () => {
-            if (this.audioPlayer) {
-                console.log('Auto-playing audio after user interaction...');
-                this.audioPlayer.play().catch(error => {
-                    console.log('Auto-play blocked by browser. Click play button or press Cmd+P (Mac) / Alt+P (Windows) to start.');
-                });
-            }
-            // Remove event listeners after first play
-            document.removeEventListener('click', playIntro);
-            document.removeEventListener('keydown', playIntro);
-        };
+        // Only setup auto-play if we're on the home page
+        if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+            // Auto-play audio after user interaction
+            const playIntro = () => {
+                if (this.audioPlayer) {
+                    console.log('Auto-playing home audio after user interaction...');
+                    this.audioPlayer.play().catch(error => {
+                        console.log('Auto-play blocked by browser. Click play button or press Cmd+P (Mac) / Alt+P (Windows) to start.');
+                    });
+                }
+                // Remove event listeners after first play
+                document.removeEventListener('click', playIntro);
+                document.removeEventListener('keydown', playIntro);
+            };
 
-        // Listen for first user interaction
-        document.addEventListener('click', playIntro, { once: true });
-        document.addEventListener('keydown', playIntro, { once: true });
+            // Listen for first user interaction
+            document.addEventListener('click', playIntro, { once: true });
+            document.addEventListener('keydown', playIntro, { once: true });
+        }
         
         console.log('Audio ready. Click anywhere or press any key to start auto-play.');
     }

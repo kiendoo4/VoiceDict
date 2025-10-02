@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const NodeCache = require('node-cache');
 const axios = require('axios');
-const { gTTS } = require('gtts');
+const gTTS = require('gtts');
 
 // Cache for 24 hours
 const cache = new NodeCache({ stdTTL: 86400 });
@@ -96,6 +96,47 @@ class AudioController {
         }
     }
 
+    async getTTSAudioFile(req, res) {
+        try {
+            const { filename } = req.params;
+            const filePath = path.join(__dirname, '../assets/audio/tts', filename);
+            
+            // Check if file exists
+            try {
+                await fs.access(filePath);
+            } catch (error) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Audio file not found'
+                });
+            }
+            
+            // Set appropriate headers to allow cross-origin audio playback
+            res.setHeader('Content-Type', 'audio/mpeg');
+            res.setHeader('Cache-Control', 'public, max-age=86400'); // 24 hours
+            const requestOrigin = req.headers.origin;
+            const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:8080', 'http://127.0.0.1:8080'];
+            if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
+                res.setHeader('Access-Control-Allow-Origin', requestOrigin);
+            } else {
+                res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:8080');
+            }
+            res.setHeader('Access-Control-Allow-Credentials', 'true');
+            
+            // Stream the file
+            const fileStream = require('fs').createReadStream(filePath);
+            fileStream.pipe(res);
+            
+        } catch (error) {
+            console.error('Get TTS audio file error:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Failed to get TTS audio file',
+                message: error.message
+            });
+        }
+    }
+
     async generatePronunciation(req, res) {
         try {
             const { word, lang = 'vi-VN' } = req.body;
@@ -163,7 +204,7 @@ class AudioController {
                 });
             });
             
-            return `/api/audio/file/tts/${filename}`;
+            return `http://localhost:3000/api/audio/file/tts/${filename}`;
         } catch (error) {
             console.error('Google TTS error:', error);
             // Fallback to mock URL
@@ -206,4 +247,5 @@ class AudioController {
     }
 }
 
-module.exports = new AudioController();
+const audioController = new AudioController();
+module.exports = audioController;

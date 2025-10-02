@@ -1,7 +1,6 @@
 .venv/
 venv/
 .env
-.env.*
 *.env
 
 # Node

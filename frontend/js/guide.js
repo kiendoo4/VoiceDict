@@ -14,6 +14,7 @@ class GuideApp {
         this.setupAccessibility();
         this.loadAudioTexts();
         this.initializeAudioPlayers();
+        this.setupScrollAudioSync();
     }
 
     initializeElements() {
@@ -119,6 +120,60 @@ class GuideApp {
         }
     }
 
+
+    setupScrollAudioSync() {
+        const sections = Array.from(document.querySelectorAll('[data-audio]'));
+        if (!sections.length) return;
+
+        const visibilityMap = new Map();
+
+        const setActiveSection = (audioId) => {
+            if (!audioId || this.currentAudioSection === audioId) return;
+
+            // Pause all other sections
+            Object.entries(this.audioPlayers).forEach(([id, player]) => {
+                if (id !== audioId && player && player.isAudioPlaying && player.isAudioPlaying()) {
+                    player.pause();
+                }
+            });
+
+            const targetPlayer = this.audioPlayers[audioId];
+            if (targetPlayer && targetPlayer.play) {
+                this.currentAudioSection = audioId;
+                targetPlayer.play();
+                this.isPlaying = true;
+                this.updateAudioButton();
+            }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const audioId = entry.target.getAttribute('data-audio');
+                visibilityMap.set(audioId, entry.isIntersecting ? entry.intersectionRatio : 0);
+            });
+
+            // Pick the most visible intersecting section
+            let bestId = null;
+            let bestRatio = 0;
+            visibilityMap.forEach((ratio, id) => {
+                if (ratio > bestRatio) {
+                    bestRatio = ratio;
+                    bestId = id;
+                }
+            });
+
+            // Only switch when visibility is meaningful
+            if (bestId && bestRatio > 0.25) {
+                setActiveSection(bestId);
+            }
+        }, {
+            root: null,
+            rootMargin: '0px 0px -35% 0px',
+            threshold: [0, 0.25, 0.5, 0.75, 1]
+        });
+
+        sections.forEach((sec) => observer.observe(sec));
+    }
 
     pauseAllAudio() {
         // Pause all audio players

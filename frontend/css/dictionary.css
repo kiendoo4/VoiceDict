@@ -1061,7 +1061,14 @@ body {
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+}
+
+.audio-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .pronunciation {
@@ -1125,6 +1132,41 @@ body {
 .audio-button:hover {
   transform: scale(1.1);
   box-shadow: var(--shadow-md);
+}
+
+.read-result-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+.read-result-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+}
+
+.read-result-button:active {
+  transform: translateY(0);
+}
+
+.read-result-button i {
+  font-size: 1rem;
+}
+
+.read-result-button span {
+  font-size: var(--font-size-sm);
 }
 
 /* History Section */
