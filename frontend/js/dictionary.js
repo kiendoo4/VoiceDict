@@ -523,13 +523,16 @@ class DictionaryApp {
       return;
     }
 
-    // Thực hiện tìm kiếm từ dictionary files
-    console.log("🔍 Đang tìm kiếm...");
-    console.log(
-      `Tìm từ "${searchTerm}" từ ${this.getLanguageName(this.selectedSourceLang)} sang ${this.getLanguageName(
-        this.selectedTargetLang
-      )}`
-    );
+    const audio = new Audio("/assets/audio/mp3/finding-dictionary.mp3");
+    audio.volume = 0.8;
+    this.currentAnnouncementAudio = audio;
+    audio.play().catch(() => {});
+    audio.addEventListener("ended", () => {
+      if (this.currentAnnouncementAudio === audio) {
+        this.currentAnnouncementAudio = null;
+      }
+      audio.remove();
+    });
 
     await this.searchFromDictionaryFiles(searchTerm);
   }
@@ -539,7 +542,6 @@ class DictionaryApp {
     this.showLoading();
 
     try {
-      // Sử dụng path đã test thành công
       const basePath = `/data/dictionaries/`;
       const excelFileName = `${this.selectedSourceLang}-${this.selectedTargetLang}.xlsx`;
       let results = null;
@@ -568,7 +570,12 @@ class DictionaryApp {
       } else {
         console.log(`📋 No results from Excel files, trying LLM direct...`);
         try {
-          const llmResults = await this.refineResultsWithLLM([], searchTerm, this.selectedSourceLang, this.selectedTargetLang);
+          const llmResults = await this.refineResultsWithLLM(
+            [],
+            searchTerm,
+            this.selectedSourceLang,
+            this.selectedTargetLang
+          );
           if (llmResults && Array.isArray(llmResults) && llmResults.length > 0) {
             console.log(`✅ LLM returned ${llmResults.length} results`);
             this.displayResults(llmResults);
@@ -577,7 +584,7 @@ class DictionaryApp {
             return;
           }
         } catch (e) {
-          console.warn('LLM direct failed, falling back to mock...', e);
+          console.warn("LLM direct failed, falling back to mock...", e);
         }
 
         // Fallback to mock data
@@ -611,7 +618,12 @@ class DictionaryApp {
       // On any error, try LLM directly as fallback
       try {
         console.log("⚠️ Excel error, trying LLM direct fallback...");
-        const llmResults = await this.refineResultsWithLLM([], searchTerm, this.selectedSourceLang, this.selectedTargetLang);
+        const llmResults = await this.refineResultsWithLLM(
+          [],
+          searchTerm,
+          this.selectedSourceLang,
+          this.selectedTargetLang
+        );
         if (llmResults && Array.isArray(llmResults) && llmResults.length > 0) {
           console.log(`✅ LLM fallback returned ${llmResults.length} results`);
           this.displayResults(llmResults);
@@ -863,7 +875,7 @@ class DictionaryApp {
         const resultElement = this.createResultElement(result, searchTerm);
         this.resultsContent.appendChild(resultElement);
       });
-      
+
       // Auto-read the first result with Google TTS
       if (results.length > 0) {
         console.log("🔊 Auto-reading first result:", results[0]);
@@ -892,7 +904,7 @@ class DictionaryApp {
 
     // Create full text for Google TTS reading
     const fullResultText = this.createFullResultText(result);
-    
+
     div.innerHTML = `
       <div class="word-title">
         <span class="result-word" tabindex="0" title="Bấm để copy">${wordHtml}</span>
@@ -908,7 +920,6 @@ class DictionaryApp {
           }
         </div>
       </div>
-      <div class="pronunciation">${result.pronunciation}</div>
       <div class="definitions">
         ${result.definitions
           .map(
@@ -941,11 +952,11 @@ class DictionaryApp {
   createFullResultText(result) {
     // Create a natural Vietnamese text from the result
     let text = `Từ: ${result.word}. `;
-    
+
     if (result.pronunciation) {
       text += `Phát âm: ${result.pronunciation}. `;
     }
-    
+
     if (result.definitions && result.definitions.length > 0) {
       text += "Nghĩa: ";
       result.definitions.forEach((def, index) => {
@@ -955,7 +966,7 @@ class DictionaryApp {
         }
       });
     }
-    
+
     return text;
   }
 
@@ -965,17 +976,17 @@ class DictionaryApp {
       // Create full text for the first result
       const fullResultText = this.createFullResultText(result);
       console.log("📝 Full result text:", fullResultText);
-      
+
       // Stop any current audio
       this.stopCurrentAudio();
-      
+
       // Show loading state
       this.announceToScreenReader("Đang đọc kết quả tra cứu...");
       console.log("🚀 Calling TTS API...");
-      
+
       // Call Google TTS API - ONLY use backend server (port 3000)
       const candidates = [
-        'http://localhost:3000/api/audio/tts', // Backend Express server with TTS
+        "http://localhost:3000/api/audio/tts", // Backend Express server with TTS
       ];
 
       let data = null;
@@ -983,10 +994,10 @@ class DictionaryApp {
       for (const url of candidates) {
         try {
           const resp = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: fullResultText, lang: 'vi-VN', voice: 'default' }),
-            mode: 'cors',
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: fullResultText, lang: "vi-VN", voice: "default" }),
+            mode: "cors",
           });
           if (!resp.ok) {
             lastError = new Error(`TTS API request failed: ${resp.status}`);
@@ -1000,53 +1011,51 @@ class DictionaryApp {
       }
 
       if (!data) {
-        throw lastError || new Error('TTS API request failed');
+        throw lastError || new Error("TTS API request failed");
       }
-      
+
       if (data.success && data.data.audioUrl) {
         // Play the generated audio
         const audio = new Audio(data.data.audioUrl);
         audio.volume = 0.8;
-        
+
         // Track this as current announcement audio
         if (this.currentAnnouncementAudio) {
           this.currentAnnouncementAudio.pause();
           this.currentAnnouncementAudio.currentTime = 0;
         }
         this.currentAnnouncementAudio = audio;
-        
-        audio.addEventListener('loadstart', () => {
+
+        audio.addEventListener("loadstart", () => {
           this.announceToScreenReader("Đang tải audio...");
         });
-        
-        audio.addEventListener('canplay', () => {
+
+        audio.addEventListener("canplay", () => {
           this.announceToScreenReader("Bắt đầu đọc kết quả tra cứu");
         });
-        
-        audio.addEventListener('ended', () => {
+
+        audio.addEventListener("ended", () => {
           this.announceToScreenReader("Đã đọc xong kết quả");
           if (this.currentAnnouncementAudio === audio) {
             this.currentAnnouncementAudio = null;
           }
         });
-        
-        audio.addEventListener('error', (e) => {
-          console.error('Audio playback error:', e);
+
+        audio.addEventListener("error", (e) => {
+          console.error("Audio playback error:", e);
           this.announceToScreenReader("Lỗi khi phát audio");
           // Fallback to browser TTS
           this.speakWithBrowserTTS(fullResultText);
         });
-        
+
         await audio.play();
-        
       } else {
-        throw new Error('Invalid TTS response');
+        throw new Error("Invalid TTS response");
       }
-      
     } catch (error) {
-      console.error('Google TTS error:', error);
+      console.error("Google TTS error:", error);
       this.announceToScreenReader("Lỗi khi tạo audio, sử dụng giọng nói trình duyệt");
-      
+
       // Fallback to browser TTS
       const fullResultText = this.createFullResultText(result);
       this.speakWithBrowserTTS(fullResultText);
@@ -1056,16 +1065,16 @@ class DictionaryApp {
   async readFullResult(encodedText) {
     try {
       const text = decodeURIComponent(encodedText);
-      
+
       // Stop any current audio
       this.stopCurrentAudio();
-      
+
       // Show loading state
       this.announceToScreenReader("Đang chuẩn bị đọc kết quả...");
-      
+
       // Call Google TTS API - ONLY use backend server (port 3000)
       const candidates = [
-        'http://localhost:3000/api/audio/tts', // Backend Express server with TTS
+        "http://localhost:3000/api/audio/tts", // Backend Express server with TTS
       ];
 
       let data = null;
@@ -1073,10 +1082,10 @@ class DictionaryApp {
       for (const url of candidates) {
         try {
           const resp = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text, lang: 'vi-VN', voice: 'default' }),
-            mode: 'cors',
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text, lang: "vi-VN", voice: "default" }),
+            mode: "cors",
           });
           if (!resp.ok) {
             lastError = new Error(`TTS API request failed: ${resp.status}`);
@@ -1090,53 +1099,51 @@ class DictionaryApp {
       }
 
       if (!data) {
-        throw lastError || new Error('TTS API request failed');
+        throw lastError || new Error("TTS API request failed");
       }
-      
+
       if (data.success && data.data.audioUrl) {
         // Play the generated audio
         const audio = new Audio(data.data.audioUrl);
         audio.volume = 0.8;
-        
+
         // Track this as current announcement audio
         if (this.currentAnnouncementAudio) {
           this.currentAnnouncementAudio.pause();
           this.currentAnnouncementAudio.currentTime = 0;
         }
         this.currentAnnouncementAudio = audio;
-        
-        audio.addEventListener('loadstart', () => {
+
+        audio.addEventListener("loadstart", () => {
           this.announceToScreenReader("Đang tải audio...");
         });
-        
-        audio.addEventListener('canplay', () => {
+
+        audio.addEventListener("canplay", () => {
           this.announceToScreenReader("Bắt đầu đọc kết quả tra cứu");
         });
-        
-        audio.addEventListener('ended', () => {
+
+        audio.addEventListener("ended", () => {
           this.announceToScreenReader("Đã đọc xong kết quả");
           if (this.currentAnnouncementAudio === audio) {
             this.currentAnnouncementAudio = null;
           }
         });
-        
-        audio.addEventListener('error', (e) => {
-          console.error('Audio playback error:', e);
+
+        audio.addEventListener("error", (e) => {
+          console.error("Audio playback error:", e);
           this.announceToScreenReader("Lỗi khi phát audio");
           // Fallback to browser TTS
           this.speakWithBrowserTTS(text);
         });
-        
+
         await audio.play();
-        
       } else {
-        throw new Error('Invalid TTS response');
+        throw new Error("Invalid TTS response");
       }
-      
     } catch (error) {
-      console.error('Google TTS error:', error);
+      console.error("Google TTS error:", error);
       this.announceToScreenReader("Lỗi khi tạo audio, sử dụng giọng nói trình duyệt");
-      
+
       // Only fallback if all API endpoints failed
       const text = decodeURIComponent(encodedText);
       this.speakWithBrowserTTS(text);
@@ -1260,10 +1267,10 @@ class DictionaryApp {
 
     this.recognition.onstart = () => {
       this.isRecording = true;
-      
+
       // Dừng audio player khi bắt đầu ghi âm
       this.stopCurrentAudio();
-      
+
       this.voiceStatus.classList.add("recording");
       this.voiceText.textContent = "Đang nghe...";
       this.voiceToggleButton.classList.add("recording");
@@ -1284,21 +1291,23 @@ class DictionaryApp {
       this.voiceToggleButton.classList.remove("recording");
       this.voiceToggleIcon.className = "fas fa-microphone";
       this.voiceToggleText.textContent = "Ghi âm lại";
-      
+
       // Không hiện nút tìm kiếm nữa, tự động tìm kiếm luôn
       this.voiceSearchButton.style.display = "none";
       this.voiceClearButton.style.display = "flex";
       this.isRecording = false;
-      
+
       this.announceToScreenReader(`Đã ghi âm: ${transcript}. Đang tìm kiếm...`);
-      
+
       // Tự động tìm kiếm ngay lập tức
       this.searchInput.value = transcript;
-      this.handleCustomSearch().then(() => {
-        this.voiceText.textContent = "Hoàn thành tìm kiếm";
-      }).catch(() => {
-        this.voiceText.textContent = "Lỗi tìm kiếm";
-      });
+      this.handleCustomSearch()
+        .then(() => {
+          this.voiceText.textContent = "Hoàn thành tìm kiếm";
+        })
+        .catch(() => {
+          this.voiceText.textContent = "Lỗi tìm kiếm";
+        });
     };
 
     this.recognition.onerror = (event) => {
@@ -2237,7 +2246,12 @@ class DictionaryApp {
 
     return results.length > 0 ? results : null;
   }
-  async refineResultsWithLLM(results, searchTerm, fromLang = this.selectedSourceLang, toLang = this.selectedTargetLang) {
+  async refineResultsWithLLM(
+    results,
+    searchTerm,
+    fromLang = this.selectedSourceLang,
+    toLang = this.selectedTargetLang
+  ) {
     // Call backend Gemini route (same origin backend at 3000)
     const endpoint = "http://localhost:3000/api/llm/translate";
     const systemPrompt = `
@@ -2283,7 +2297,7 @@ Nhiệm vụ của bạn:
       word: searchTerm,
       fromLang,
       toLang,
-      seedResults: results || []
+      seedResults: results || [],
     };
 
     try {
