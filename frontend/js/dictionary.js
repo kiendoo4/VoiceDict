@@ -1,11 +1,20 @@
 // Dictionary Page JavaScript
 class DictionaryApp {
   constructor() {
-    this.searchHistory = JSON.parse(localStorage.getItem("dictionaryHistory") || "[]");
+    this.searchHistory = JSON.parse(
+      localStorage.getItem("dictionaryHistory") || "[]"
+    );
     this.currentSearch = "";
     this.isVoiceEnabled = false;
     this.currentTextSize = "normal";
-    this.textSizeLevels = ["normal", "small", "large", "extra-large", "huge", "giant"];
+    this.textSizeLevels = [
+      "normal",
+      "small",
+      "large",
+      "extra-large",
+      "huge",
+      "giant",
+    ];
     this.currentTextSizeIndex = 1; // normal is index 1
 
     // Flow state
@@ -70,10 +79,14 @@ class DictionaryApp {
     this.quickButtons = document.querySelectorAll(".quick-btn");
 
     // Flow specific elements
-    this.selectedSourceLangName = document.getElementById("selected-source-lang-name");
+    this.selectedSourceLangName = document.getElementById(
+      "selected-source-lang-name"
+    );
     this.translationFrom = document.getElementById("translation-from");
     this.translationTo = document.getElementById("translation-to");
-    this.translationFromStep3 = document.getElementById("translation-from-step3");
+    this.translationFromStep3 = document.getElementById(
+      "translation-from-step3"
+    );
     this.translationToStep3 = document.getElementById("translation-to-step3");
     this.step4Description = document.getElementById("step4-description");
 
@@ -98,8 +111,13 @@ class DictionaryApp {
   // Bind input method events dynamically
   bindInputMethodEvents() {
     // Query for input method options every time this is called
-    const inputMethodOptions = document.querySelectorAll(".input-method-option");
-    console.log("Binding input method events, found options:", inputMethodOptions.length);
+    const inputMethodOptions = document.querySelectorAll(
+      ".input-method-option"
+    );
+    console.log(
+      "Binding input method events, found options:",
+      inputMethodOptions.length
+    );
 
     inputMethodOptions.forEach((option) => {
       console.log("Binding events to option:", option);
@@ -143,7 +161,9 @@ class DictionaryApp {
     });
 
     if (this.searchButton) {
-      this.searchButton.addEventListener("click", () => this.handleCustomSearch());
+      this.searchButton.addEventListener("click", () =>
+        this.handleCustomSearch()
+      );
     }
     if (this.searchInput) {
       this.searchInput.addEventListener("keypress", (e) => {
@@ -197,13 +217,17 @@ class DictionaryApp {
 
     // Text size controls
     if (this.decreaseTextBtn) {
-      this.decreaseTextBtn.addEventListener("click", () => this.decreaseTextSize());
+      this.decreaseTextBtn.addEventListener("click", () =>
+        this.decreaseTextSize()
+      );
     }
     if (this.normalTextBtn) {
       this.normalTextBtn.addEventListener("click", () => this.normalTextSize());
     }
     if (this.increaseTextBtn) {
-      this.increaseTextBtn.addEventListener("click", () => this.increaseTextSize());
+      this.increaseTextBtn.addEventListener("click", () =>
+        this.increaseTextSize()
+      );
     }
     if (this.pauseAudioBtn) {
       this.pauseAudioBtn.addEventListener("click", () => this.pauseAllAudio());
@@ -218,13 +242,19 @@ class DictionaryApp {
 
     // Voice input events
     if (this.voiceToggleButton) {
-      this.voiceToggleButton.addEventListener("click", () => this.toggleVoiceRecording());
+      this.voiceToggleButton.addEventListener("click", () =>
+        this.toggleVoiceRecording()
+      );
     }
     if (this.voiceSearchButton) {
-      this.voiceSearchButton.addEventListener("click", () => this.searchVoiceInput());
+      this.voiceSearchButton.addEventListener("click", () =>
+        this.searchVoiceInput()
+      );
     }
     if (this.voiceClearButton) {
-      this.voiceClearButton.addEventListener("click", () => this.clearVoiceInput());
+      this.voiceClearButton.addEventListener("click", () =>
+        this.clearVoiceInput()
+      );
     }
   }
 
@@ -268,7 +298,9 @@ class DictionaryApp {
         console.log(`Key ${keyNum} pressed in step ${this.currentStep}`);
 
         // Find language option in the current step
-        const currentStepElement = document.getElementById(`step-${this.currentStep}`);
+        const currentStepElement = document.getElementById(
+          `step-${this.currentStep}`
+        );
         const languageOption = currentStepElement
           ? currentStepElement.querySelector(`[data-key="${keyNum}"]`)
           : document.querySelector(`[data-key="${keyNum}"]`);
@@ -277,7 +309,9 @@ class DictionaryApp {
           console.log(`Found language option:`, languageOption);
           this.selectLanguage({ target: languageOption });
         } else {
-          console.log(`Language option with key ${keyNum} not found in step ${this.currentStep}`);
+          console.log(
+            `Language option with key ${keyNum} not found in step ${this.currentStep}`
+          );
         }
         return;
       }
@@ -288,7 +322,9 @@ class DictionaryApp {
         console.log(`Enter pressed in step ${this.currentStep}`);
 
         // Kiểm tra xem có ngôn ngữ nào được chọn không
-        const currentStepElement = document.getElementById(`step-${this.currentStep}`);
+        const currentStepElement = document.getElementById(
+          `step-${this.currentStep}`
+        );
         const selectedOption = currentStepElement
           ? currentStepElement.querySelector(".language-option.selected")
           : null;
@@ -297,8 +333,12 @@ class DictionaryApp {
           console.log(`Confirming selection in step ${this.currentStep}`);
           this.confirmLanguageSelection();
         } else {
-          console.log(`No language selected in step ${this.currentStep}, not confirming`);
-          this.announceToScreenReader("Vui lòng chọn một ngôn ngữ trước khi nhấn Enter");
+          console.log(
+            `No language selected in step ${this.currentStep}, not confirming`
+          );
+          this.announceToScreenReader(
+            "Vui lòng chọn một ngôn ngữ trước khi nhấn Enter"
+          );
         }
         return;
       }
@@ -312,7 +352,9 @@ class DictionaryApp {
         console.log(`Key ${keyNum} pressed in step ${this.currentStep}`);
 
         // Find input method option in the current step
-        const currentStepElement = document.getElementById(`step-${this.currentStep}`);
+        const currentStepElement = document.getElementById(
+          `step-${this.currentStep}`
+        );
         const inputMethodOption = currentStepElement
           ? currentStepElement.querySelector(`[data-key="${keyNum}"]`)
           : document.querySelector(`[data-key="${keyNum}"]`);
@@ -321,7 +363,9 @@ class DictionaryApp {
           console.log(`Found input method option:`, inputMethodOption);
           this.selectInputMethod({ target: inputMethodOption });
         } else {
-          console.log(`Input method option with key ${keyNum} not found in step ${this.currentStep}`);
+          console.log(
+            `Input method option with key ${keyNum} not found in step ${this.currentStep}`
+          );
         }
         return;
       }
@@ -332,17 +376,25 @@ class DictionaryApp {
         console.log(`Enter pressed in step ${this.currentStep}`);
 
         // Kiểm tra xem có input method nào được chọn không
-        const currentStepElement = document.getElementById(`step-${this.currentStep}`);
+        const currentStepElement = document.getElementById(
+          `step-${this.currentStep}`
+        );
         const selectedOption = currentStepElement
           ? currentStepElement.querySelector(".input-method-option.selected")
           : null;
 
         if (selectedOption) {
-          console.log(`Confirming input method selection in step ${this.currentStep}`);
+          console.log(
+            `Confirming input method selection in step ${this.currentStep}`
+          );
           this.confirmInputMethodSelection();
         } else {
-          console.log(`No input method selected in step ${this.currentStep}, not confirming`);
-          this.announceToScreenReader("Vui lòng chọn phương thức nhập trước khi nhấn Enter");
+          console.log(
+            `No input method selected in step ${this.currentStep}, not confirming`
+          );
+          this.announceToScreenReader(
+            "Vui lòng chọn phương thức nhập trước khi nhấn Enter"
+          );
         }
         return;
       }
@@ -372,9 +424,14 @@ class DictionaryApp {
       }
 
       // Quick search shortcuts (only for keyboard input when not typing)
-      if (this.selectedInputMethod === "keyboard" && ["q", "w", "e", "r"].includes(e.key.toLowerCase())) {
+      if (
+        this.selectedInputMethod === "keyboard" &&
+        ["q", "w", "e", "r"].includes(e.key.toLowerCase())
+      ) {
         e.preventDefault();
-        const quickBtn = document.querySelector(`[data-key="${e.key.toLowerCase()}"]`);
+        const quickBtn = document.querySelector(
+          `[data-key="${e.key.toLowerCase()}"]`
+        );
         if (quickBtn) {
           const word = quickBtn.getAttribute("data-word");
           this.searchInput.value = word;
@@ -414,7 +471,10 @@ class DictionaryApp {
       e.preventDefault();
       if (this.audioPlayer && this.audioPlayer.audio) {
         // Seek forward 10 seconds
-        const newTime = Math.min(this.audioPlayer.audio.duration || 0, this.audioPlayer.audio.currentTime + 10);
+        const newTime = Math.min(
+          this.audioPlayer.audio.duration || 0,
+          this.audioPlayer.audio.currentTime + 10
+        );
         this.audioPlayer.audio.currentTime = newTime;
       }
       return;
@@ -472,7 +532,10 @@ class DictionaryApp {
     const cleanValue = value.trim();
     if (cleanValue.length > 0) {
       this.searchButton.disabled = false;
-      this.searchButton.setAttribute("aria-label", `Tìm kiếm từ "${cleanValue}"`);
+      this.searchButton.setAttribute(
+        "aria-label",
+        `Tìm kiếm từ "${cleanValue}"`
+      );
     } else {
       this.searchButton.disabled = true;
       this.searchButton.setAttribute("aria-label", "Tìm kiếm");
@@ -486,15 +549,23 @@ class DictionaryApp {
     console.log("=== THÔNG TIN TÌM KIẾM ===");
     console.log(
       "Ngôn ngữ nguồn:",
-      this.selectedSourceLang ? this.getLanguageName(this.selectedSourceLang) : "Chưa chọn"
+      this.selectedSourceLang
+        ? this.getLanguageName(this.selectedSourceLang)
+        : "Chưa chọn"
     );
     console.log(
       "Ngôn ngữ đích:",
-      this.selectedTargetLang ? this.getLanguageName(this.selectedTargetLang) : "Chưa chọn"
+      this.selectedTargetLang
+        ? this.getLanguageName(this.selectedTargetLang)
+        : "Chưa chọn"
     );
     console.log(
       "Phương thức nhập:",
-      this.selectedInputMethod ? (this.selectedInputMethod === "keyboard" ? "Bàn phím" : "Giọng nói") : "Chưa chọn"
+      this.selectedInputMethod
+        ? this.selectedInputMethod === "keyboard"
+          ? "Bàn phím"
+          : "Giọng nói"
+        : "Chưa chọn"
     );
     console.log("Từ cần tìm:", searchTerm || "Chưa nhập");
     console.log("Mã ngôn ngữ nguồn:", this.selectedSourceLang);
@@ -554,19 +625,34 @@ class DictionaryApp {
         console.log(`✅ Found ${results.length} results from Excel files`);
         // Gửi lên LLM để refine
         try {
-          const refinedResults = await this.refineResultsWithLLM(results, searchTerm);
-          if (refinedResults && Array.isArray(refinedResults) && refinedResults.length > 0) {
+          const refinedResults = await this.refineResultsWithLLM(
+            results,
+            searchTerm
+          );
+          if (
+            refinedResults &&
+            Array.isArray(refinedResults) &&
+            refinedResults.length > 0
+          ) {
             results = refinedResults;
             console.log("✅ Refined results with LLM:", results);
           } else {
-            console.log("⚠️ LLM did not return better results, using original results.");
+            console.log(
+              "⚠️ LLM did not return better results, using original results."
+            );
           }
         } catch (llmError) {
           console.error("LLM refine error:", llmError);
         }
         this.displayResults(results);
-        this.addToHistory(searchTerm, this.selectedSourceLang, this.selectedTargetLang);
-        this.announceToScreenReader(`Tìm thấy ${results.length} kết quả cho từ "${searchTerm}"`);
+        this.addToHistory(
+          searchTerm,
+          this.selectedSourceLang,
+          this.selectedTargetLang
+        );
+        this.announceToScreenReader(
+          `Tìm thấy ${results.length} kết quả cho từ "${searchTerm}"`
+        );
       } else {
         console.log(`📋 No results from Excel files, trying LLM direct...`);
         try {
@@ -576,11 +662,21 @@ class DictionaryApp {
             this.selectedSourceLang,
             this.selectedTargetLang
           );
-          if (llmResults && Array.isArray(llmResults) && llmResults.length > 0) {
+          if (
+            llmResults &&
+            Array.isArray(llmResults) &&
+            llmResults.length > 0
+          ) {
             console.log(`✅ LLM returned ${llmResults.length} results`);
             this.displayResults(llmResults);
-            this.addToHistory(searchTerm, this.selectedSourceLang, this.selectedTargetLang);
-            this.announceToScreenReader(`Tìm thấy ${llmResults.length} kết quả cho từ "${searchTerm}"`);
+            this.addToHistory(
+              searchTerm,
+              this.selectedSourceLang,
+              this.selectedTargetLang
+            );
+            this.announceToScreenReader(
+              `Tìm thấy ${llmResults.length} kết quả cho từ "${searchTerm}"`
+            );
             return;
           }
         } catch (e) {
@@ -589,18 +685,28 @@ class DictionaryApp {
 
         // Fallback to mock data
         console.log(`📋 Using mock data fallback...`);
-        const mockResults = await this.searchWithMockData(searchTerm, this.selectedSourceLang, this.selectedTargetLang);
+        const mockResults = await this.searchWithMockData(
+          searchTerm,
+          this.selectedSourceLang,
+          this.selectedTargetLang
+        );
         if (mockResults && mockResults.length > 0) {
           console.log(`✅ Found ${mockResults.length} results from mock data`);
           this.displayResults(mockResults);
-          this.addToHistory(searchTerm, this.selectedSourceLang, this.selectedTargetLang);
-          this.announceToScreenReader(`Tìm thấy ${mockResults.length} kết quả cho từ "${searchTerm}"`);
+          this.addToHistory(
+            searchTerm,
+            this.selectedSourceLang,
+            this.selectedTargetLang
+          );
+          this.announceToScreenReader(
+            `Tìm thấy ${mockResults.length} kết quả cho từ "${searchTerm}"`
+          );
         } else {
           console.log(`❌ No results found anywhere for "${searchTerm}"`);
           this.showError(`
-            Không tìm thấy từ điển cho ${this.getLanguageName(this.selectedSourceLang)} - ${this.getLanguageName(
-            this.selectedTargetLang
-          )}
+            Không tìm thấy từ điển cho ${this.getLanguageName(
+              this.selectedSourceLang
+            )} - ${this.getLanguageName(this.selectedTargetLang)}
             <br><br>
             <strong>Tìm kiếm:</strong> "${searchTerm}"<br>
             <strong>File cần:</strong> ${excelFileName}<br><br>
@@ -610,7 +716,9 @@ class DictionaryApp {
             </button>
           `);
           this.displayResults([]);
-          this.announceToScreenReader(`Không tìm thấy kết quả cho từ "${searchTerm}"`);
+          this.announceToScreenReader(
+            `Không tìm thấy kết quả cho từ "${searchTerm}"`
+          );
         }
       }
     } catch (error) {
@@ -627,8 +735,14 @@ class DictionaryApp {
         if (llmResults && Array.isArray(llmResults) && llmResults.length > 0) {
           console.log(`✅ LLM fallback returned ${llmResults.length} results`);
           this.displayResults(llmResults);
-          this.addToHistory(searchTerm, this.selectedSourceLang, this.selectedTargetLang);
-          this.announceToScreenReader(`Tìm thấy ${llmResults.length} kết quả cho từ "${searchTerm}"`);
+          this.addToHistory(
+            searchTerm,
+            this.selectedSourceLang,
+            this.selectedTargetLang
+          );
+          this.announceToScreenReader(
+            `Tìm thấy ${llmResults.length} kết quả cho từ "${searchTerm}"`
+          );
           return;
         }
       } catch (llmFallbackError) {
@@ -697,16 +811,50 @@ class DictionaryApp {
     const searchLower = searchTerm.toLowerCase();
 
     // Tự động detect cột source và target
-    const possibleSourceCols = ["Source", "source", "từ_nguồn", "tu_nguon", "headword", "word", "Từ nguồn"];
-    const possibleTargetCols = ["Target", "target", "từ_đích", "tu_dich", "definition", "nghia", "nghĩa", "Từ đích"];
-    const possibleTypeCols = ["Type", "type", "từ_loại", "tu_loai", "pos", "Từ loại"];
-    const possiblePronunCols = ["Pronunciation", "pronunciation", "phát_âm", "phat_am", "Phát âm"];
+    const possibleSourceCols = [
+      "Source",
+      "source",
+      "từ_nguồn",
+      "tu_nguon",
+      "headword",
+      "word",
+      "Từ nguồn",
+    ];
+    const possibleTargetCols = [
+      "Target",
+      "target",
+      "từ_đích",
+      "tu_dich",
+      "definition",
+      "nghia",
+      "nghĩa",
+      "Từ đích",
+    ];
+    const possibleTypeCols = [
+      "Type",
+      "type",
+      "từ_loại",
+      "tu_loai",
+      "pos",
+      "Từ loại",
+    ];
+    const possiblePronunCols = [
+      "Pronunciation",
+      "pronunciation",
+      "phát_âm",
+      "phat_am",
+      "Phát âm",
+    ];
 
     const headers = Object.keys(rows[0]);
-    const sourceCol = possibleSourceCols.find((col) => headers.includes(col)) || headers[0];
-    const targetCol = possibleTargetCols.find((col) => headers.includes(col)) || headers[1];
-    const typeCol = possibleTypeCols.find((col) => headers.includes(col)) || headers[2];
-    const pronunCol = possiblePronunCols.find((col) => headers.includes(col)) || "";
+    const sourceCol =
+      possibleSourceCols.find((col) => headers.includes(col)) || headers[0];
+    const targetCol =
+      possibleTargetCols.find((col) => headers.includes(col)) || headers[1];
+    const typeCol =
+      possibleTypeCols.find((col) => headers.includes(col)) || headers[2];
+    const pronunCol =
+      possiblePronunCols.find((col) => headers.includes(col)) || "";
 
     for (const row of rows) {
       let sourceText = String(row[sourceCol] || "");
@@ -764,11 +912,21 @@ class DictionaryApp {
 
     try {
       // Simulate API call (replace with actual dictionary API)
-      const results = await this.mockDictionarySearch(query, this.selectedSourceLang, this.selectedTargetLang);
+      const results = await this.mockDictionarySearch(
+        query,
+        this.selectedSourceLang,
+        this.selectedTargetLang
+      );
 
       this.displayResults(results);
-      this.addToHistory(query, this.selectedSourceLang, this.selectedTargetLang);
-      this.announceToScreenReader(`Tìm thấy ${results.length} kết quả cho từ "${query}"`);
+      this.addToHistory(
+        query,
+        this.selectedSourceLang,
+        this.selectedTargetLang
+      );
+      this.announceToScreenReader(
+        `Tìm thấy ${results.length} kết quả cho từ "${query}"`
+      );
     } catch (error) {
       this.showError("Không thể tìm thấy từ này. Vui lòng thử lại.");
       this.announceToScreenReader("Lỗi khi tìm kiếm từ");
@@ -838,7 +996,10 @@ class DictionaryApp {
       },
     };
 
-    return definitions[word.toLowerCase()]?.[toLang] || `Definition of ${word} in ${toLang}`;
+    return (
+      definitions[word.toLowerCase()]?.[toLang] ||
+      `Definition of ${word} in ${toLang}`
+    );
   }
 
   getMockExample(word, fromLang, toLang) {
@@ -855,7 +1016,9 @@ class DictionaryApp {
       },
     };
 
-    return examples[word.toLowerCase()]?.[toLang] || `Example sentence with ${word}`;
+    return (
+      examples[word.toLowerCase()]?.[toLang] || `Example sentence with ${word}`
+    );
   }
 
   displayResults(results, searchTerm = "") {
@@ -897,8 +1060,14 @@ class DictionaryApp {
 
     // Highlight searchTerm in result.word
     let wordHtml = result.word;
-    if (searchTerm && result.word.toLowerCase().includes(searchTerm.toLowerCase())) {
-      const re = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+    if (
+      searchTerm &&
+      result.word.toLowerCase().includes(searchTerm.toLowerCase())
+    ) {
+      const re = new RegExp(
+        `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+        "gi"
+      );
       wordHtml = result.word.replace(re, "<mark>$1</mark>");
     }
 
@@ -926,7 +1095,11 @@ class DictionaryApp {
             (def) => `
               <div class="definition-item">
                 <div class="definition-text">${def.text}</div>
-                ${def.example ? `<div class="definition-example">Ví dụ: ${def.example}</div>` : ""}
+                ${
+                  def.example
+                    ? `<div class="definition-example">Ví dụ: ${def.example}</div>`
+                    : ""
+                }
               </div>
             `
           )
@@ -982,7 +1155,7 @@ class DictionaryApp {
 
       // Show loading state
       this.announceToScreenReader("Đang đọc kết quả tra cứu...");
-      console.log("🚀 Calling TTS API...");
+      console.log("🚀 Calling TTS API for:", this.selectedTargetLang);
 
       // Call Google TTS API - ONLY use backend server (port 3000)
       const candidates = [
@@ -996,7 +1169,11 @@ class DictionaryApp {
           const resp = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: fullResultText, lang: "vi-VN", voice: "default" }),
+            body: JSON.stringify({
+              text: fullResultText,
+              lang: this.selectedTargetLang,
+              voice: "default",
+            }),
             mode: "cors",
           });
           if (!resp.ok) {
@@ -1054,7 +1231,9 @@ class DictionaryApp {
       }
     } catch (error) {
       console.error("Google TTS error:", error);
-      this.announceToScreenReader("Lỗi khi tạo audio, sử dụng giọng nói trình duyệt");
+      this.announceToScreenReader(
+        "Lỗi khi tạo audio, sử dụng giọng nói trình duyệt"
+      );
 
       // Fallback to browser TTS
       const fullResultText = this.createFullResultText(result);
@@ -1142,7 +1321,9 @@ class DictionaryApp {
       }
     } catch (error) {
       console.error("Google TTS error:", error);
-      this.announceToScreenReader("Lỗi khi tạo audio, sử dụng giọng nói trình duyệt");
+      this.announceToScreenReader(
+        "Lỗi khi tạo audio, sử dụng giọng nói trình duyệt"
+      );
 
       // Only fallback if all API endpoints failed
       const text = decodeURIComponent(encodedText);
@@ -1160,7 +1341,12 @@ class DictionaryApp {
 
     // Remove existing entry if it exists
     this.searchHistory = this.searchHistory.filter(
-      (item) => !(item.word === word && item.fromLang === fromLang && item.toLang === toLang)
+      (item) =>
+        !(
+          item.word === word &&
+          item.fromLang === fromLang &&
+          item.toLang === toLang
+        )
     );
 
     // Add to beginning
@@ -1169,7 +1355,10 @@ class DictionaryApp {
     // Keep only last 20 items
     this.searchHistory = this.searchHistory.slice(0, 20);
 
-    localStorage.setItem("dictionaryHistory", JSON.stringify(this.searchHistory));
+    localStorage.setItem(
+      "dictionaryHistory",
+      JSON.stringify(this.searchHistory)
+    );
     this.loadHistory();
   }
 
@@ -1188,7 +1377,9 @@ class DictionaryApp {
     div.innerHTML = `
             <div class="history-word">${item.word}</div>
             <div class="history-languages">
-                ${this.getLanguageName(item.fromLang)} → ${this.getLanguageName(item.toLang)}
+                ${this.getLanguageName(item.fromLang)} → ${this.getLanguageName(
+      item.toLang
+    )}
             </div>
         `;
 
@@ -1220,7 +1411,9 @@ class DictionaryApp {
 
   toggleVoiceInput() {
     if (!this.isVoiceEnabled) {
-      this.announceToScreenReader("Chức năng nhập bằng giọng nói sẽ được thêm vào trong phiên bản sau");
+      this.announceToScreenReader(
+        "Chức năng nhập bằng giọng nói sẽ được thêm vào trong phiên bản sau"
+      );
       // Placeholder for future STT integration
       this.voiceButton.innerHTML = '<i class="fas fa-microphone-slash"></i>';
       this.voiceButton.setAttribute("aria-label", "Tắt nhập bằng giọng nói");
@@ -1241,12 +1434,7 @@ class DictionaryApp {
     }
   }
 
-  startVoiceInput() {
-    if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
-      this.announceToScreenReader("Trình duyệt không hỗ trợ nhận dạng giọng nói");
-      return;
-    }
-
+  getVoiceLang(code) {
     const langMap = {
       vi: "vi-VN",
       en: "en-US",
@@ -1257,13 +1445,27 @@ class DictionaryApp {
       de: "de-DE",
       es: "es-ES",
     };
+    return langMap[code] || "en-US";
+  }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  startVoiceInput() {
+    if (
+      !("webkitSpeechRecognition" in window) &&
+      !("SpeechRecognition" in window)
+    ) {
+      this.announceToScreenReader(
+        "Trình duyệt không hỗ trợ nhận dạng giọng nói"
+      );
+      return;
+    }
+
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     this.recognition = new SpeechRecognition();
 
     this.recognition.continuous = false;
     this.recognition.interimResults = false;
-    this.recognition.lang = langMap[this.selectedSourceLang] || "en-US";
+    this.recognition.lang = this.getVoiceLang(this.selectedSourceLang);
 
     this.recognition.onstart = () => {
       this.isRecording = true;
@@ -1433,7 +1635,9 @@ class DictionaryApp {
         const voices = window.speechSynthesis.getVoices();
 
         // Try to find the best Vietnamese voice
-        let vietnameseVoice = voices.find((voice) => voice.lang === "vi-VN" || voice.lang === "vi");
+        let vietnameseVoice = voices.find(
+          (voice) => voice.lang === "vi-VN" || voice.lang === "vi"
+        );
 
         // If no Vietnamese voice, try to find any voice that supports Vietnamese
         if (!vietnameseVoice) {
@@ -1483,7 +1687,11 @@ class DictionaryApp {
         speakWithVoice();
       } else {
         // Wait for voices to load
-        window.speechSynthesis.addEventListener("voiceschanged", speakWithVoice, { once: true });
+        window.speechSynthesis.addEventListener(
+          "voiceschanged",
+          speakWithVoice,
+          { once: true }
+        );
       }
     } else {
       this.announceToScreenReader("Trình duyệt không hỗ trợ text-to-speech");
@@ -1562,7 +1770,13 @@ class DictionaryApp {
 
   updateTextSize() {
     // Remove all text size classes
-    document.body.classList.remove("text-small", "text-large", "text-extra-large", "text-huge", "text-giant");
+    document.body.classList.remove(
+      "text-small",
+      "text-large",
+      "text-extra-large",
+      "text-huge",
+      "text-giant"
+    );
 
     // Add current text size class
     const currentSize = this.textSizeLevels[this.currentTextSizeIndex];
@@ -1672,7 +1886,9 @@ class DictionaryApp {
     // Auto-play audio for the current step
     this.playStepAudio(stepNumber);
 
-    console.log(`Showing step ${stepNumber}, audio player should be initialized`);
+    console.log(
+      `Showing step ${stepNumber}, audio player should be initialized`
+    );
   }
 
   updateProgressIndicator() {
@@ -1690,9 +1906,13 @@ class DictionaryApp {
 
   focusCurrentStep() {
     // Focus on the first interactive element in the current step
-    const currentStepElement = document.getElementById(`step-${this.currentStep}`);
+    const currentStepElement = document.getElementById(
+      `step-${this.currentStep}`
+    );
     if (currentStepElement) {
-      const firstInteractive = currentStepElement.querySelector("button, input, select");
+      const firstInteractive = currentStepElement.querySelector(
+        "button, input, select"
+      );
       if (firstInteractive) {
         setTimeout(() => {
           firstInteractive.focus();
@@ -1712,8 +1932,12 @@ class DictionaryApp {
     this.stopCurrentAudio();
 
     // Remove previous selection
-    const currentStepElement = document.getElementById(`step-${this.currentStep}`);
-    const previousSelected = currentStepElement.querySelector(".language-option.selected");
+    const currentStepElement = document.getElementById(
+      `step-${this.currentStep}`
+    );
+    const previousSelected = currentStepElement.querySelector(
+      ".language-option.selected"
+    );
     if (previousSelected) {
       previousSelected.classList.remove("selected");
     }
@@ -1738,7 +1962,9 @@ class DictionaryApp {
   confirmLanguageSelection() {
     // Kiểm tra xem có đang ở step đúng không
     if (this.currentStep !== 1 && this.currentStep !== 2) {
-      console.log(`confirmLanguageSelection called from wrong step: ${this.currentStep}`);
+      console.log(
+        `confirmLanguageSelection called from wrong step: ${this.currentStep}`
+      );
       return;
     }
 
@@ -1758,7 +1984,9 @@ class DictionaryApp {
           this.languageNames[this.selectedSourceLang]
         }. Nhấn phím số từ 1-8 để chọn ngôn ngữ đích. Nhấn Space để nghe hướng dẫn audio.`
       );
-      console.log("Moved to step 2, keyboard shortcuts should work for language selection");
+      console.log(
+        "Moved to step 2, keyboard shortcuts should work for language selection"
+      );
     } else if (this.currentStep === 2) {
       // Kiểm tra có chọn ngôn ngữ đích chưa
       if (!this.selectedTargetLang) {
@@ -1772,18 +2000,24 @@ class DictionaryApp {
       this.updateTranslationInfoStep3();
       this.showStep(3);
       this.announceToScreenReader(
-        `Bước 3: Chọn cách nhập từ. Dịch từ ${this.languageNames[this.selectedSourceLang]} sang ${
+        `Bước 3: Chọn cách nhập từ. Dịch từ ${
+          this.languageNames[this.selectedSourceLang]
+        } sang ${
           this.languageNames[this.selectedTargetLang]
         }. Nhấn phím 1 để nhập bằng bàn phím, phím 2 để nhập bằng giọng nói. Nhấn Space để nghe hướng dẫn audio.`
       );
-      console.log("Moved to step 3, keyboard shortcuts should work for input method selection");
+      console.log(
+        "Moved to step 3, keyboard shortcuts should work for input method selection"
+      );
     }
   }
 
   confirmInputMethodSelection() {
     // Kiểm tra xem có đang ở step 3 không
     if (this.currentStep !== 3) {
-      console.log(`confirmInputMethodSelection called from wrong step: ${this.currentStep}`);
+      console.log(
+        `confirmInputMethodSelection called from wrong step: ${this.currentStep}`
+      );
       return;
     }
 
@@ -1798,10 +2032,12 @@ class DictionaryApp {
     this.updateStep4Description();
     this.showStep(4);
     this.announceToScreenReader(
-      `Bước 4: Nhập từ cần tra. Dịch từ ${this.languageNames[this.selectedSourceLang]} sang ${
-        this.languageNames[this.selectedTargetLang]
-      }. ${
-        this.selectedInputMethod === "keyboard" ? "Nhập từ bằng bàn phím" : "Nói từ cần tra cứu"
+      `Bước 4: Nhập từ cần tra. Dịch từ ${
+        this.languageNames[this.selectedSourceLang]
+      } sang ${this.languageNames[this.selectedTargetLang]}. ${
+        this.selectedInputMethod === "keyboard"
+          ? "Nhập từ bằng bàn phím"
+          : "Nói từ cần tra cứu"
       }. Nhấn Space để nghe hướng dẫn audio.`
     );
     console.log("Moved to step 4, input method:", this.selectedInputMethod);
@@ -1815,7 +2051,8 @@ class DictionaryApp {
     console.log("Button found:", button);
 
     const method = button.getAttribute("data-method");
-    const methodName = method === "keyboard" ? "Nhập bằng bàn phím" : "Nhập bằng giọng nói";
+    const methodName =
+      method === "keyboard" ? "Nhập bằng bàn phím" : "Nhập bằng giọng nói";
 
     console.log("Method:", method, "Method name:", methodName);
 
@@ -1823,7 +2060,9 @@ class DictionaryApp {
     this.stopCurrentAudio();
 
     // Remove previous selection
-    const currentStepElement = document.getElementById(`step-${this.currentStep}`);
+    const currentStepElement = document.getElementById(
+      `step-${this.currentStep}`
+    );
     const previousSelected = currentStepElement
       ? currentStepElement.querySelector(".input-method-option.selected")
       : null;
@@ -1841,7 +2080,9 @@ class DictionaryApp {
 
     // Announce selection (without triggering additional TTS)
     setTimeout(() => {
-      this.announceToScreenReader(`Đã chọn ${methodName}. Nhấn Enter để xác nhận.`);
+      this.announceToScreenReader(
+        `Đã chọn ${methodName}. Nhấn Enter để xác nhận.`
+      );
     }, 1500); // Wait for speakText to finish
 
     // Store selection và log
@@ -1850,34 +2091,41 @@ class DictionaryApp {
 
   updateSourceLanguageInfo() {
     if (this.selectedSourceLangName) {
-      this.selectedSourceLangName.textContent = this.languageNames[this.selectedSourceLang];
+      this.selectedSourceLangName.textContent =
+        this.languageNames[this.selectedSourceLang];
     }
   }
 
   updateTranslationInfo() {
     if (this.translationFrom) {
-      this.translationFrom.textContent = this.languageNames[this.selectedSourceLang];
+      this.translationFrom.textContent =
+        this.languageNames[this.selectedSourceLang];
     }
     if (this.translationTo) {
-      this.translationTo.textContent = this.languageNames[this.selectedTargetLang];
+      this.translationTo.textContent =
+        this.languageNames[this.selectedTargetLang];
     }
   }
 
   updateTranslationInfoStep3() {
     if (this.translationFromStep3) {
-      this.translationFromStep3.textContent = this.languageNames[this.selectedSourceLang];
+      this.translationFromStep3.textContent =
+        this.languageNames[this.selectedSourceLang];
     }
     if (this.translationToStep3) {
-      this.translationToStep3.textContent = this.languageNames[this.selectedTargetLang];
+      this.translationToStep3.textContent =
+        this.languageNames[this.selectedTargetLang];
     }
   }
 
   updateStep4Description() {
     if (this.step4Description) {
       if (this.selectedInputMethod === "keyboard") {
-        this.step4Description.textContent = "Nhập từ bạn muốn tra cứu bằng bàn phím";
+        this.step4Description.textContent =
+          "Nhập từ bạn muốn tra cứu bằng bàn phím";
       } else {
-        this.step4Description.textContent = "Nói từ bạn muốn tra cứu bằng giọng nói";
+        this.step4Description.textContent =
+          "Nói từ bạn muốn tra cứu bằng giọng nói";
       }
     }
 
@@ -1909,13 +2157,17 @@ class DictionaryApp {
         2: `Bước 2: Chọn ngôn ngữ đích. Đang dịch từ ${
           this.languageNames[this.selectedSourceLang]
         }. Nhấn phím số từ 1-8 để chọn ngôn ngữ đích. Nhấn Space để nghe hướng dẫn audio.`,
-        3: `Bước 3: Chọn cách nhập từ. Dịch từ ${this.languageNames[this.selectedSourceLang]} sang ${
+        3: `Bước 3: Chọn cách nhập từ. Dịch từ ${
+          this.languageNames[this.selectedSourceLang]
+        } sang ${
           this.languageNames[this.selectedTargetLang]
         }. Nhấn phím 1 để nhập bằng bàn phím, phím 2 để nhập bằng giọng nói. Nhấn Space để nghe hướng dẫn audio.`,
-        4: `Bước 4: Nhập từ cần tra. Dịch từ ${this.languageNames[this.selectedSourceLang]} sang ${
-          this.languageNames[this.selectedTargetLang]
-        }. ${
-          this.selectedInputMethod === "keyboard" ? "Nhập từ bằng bàn phím" : "Nói từ cần tra cứu"
+        4: `Bước 4: Nhập từ cần tra. Dịch từ ${
+          this.languageNames[this.selectedSourceLang]
+        } sang ${this.languageNames[this.selectedTargetLang]}. ${
+          this.selectedInputMethod === "keyboard"
+            ? "Nhập từ bằng bàn phím"
+            : "Nói từ cần tra cứu"
         }. Nhấn Space để nghe hướng dẫn audio.`,
       };
 
@@ -1934,7 +2186,9 @@ class DictionaryApp {
       // Create new AudioPlayer for the specific step
       setTimeout(() => {
         // Prefer the audio container inside the currently active step
-        const currentStepElement = document.getElementById(`step-${stepNumber}`);
+        const currentStepElement = document.getElementById(
+          `step-${stepNumber}`
+        );
         const container = currentStepElement
           ? currentStepElement.querySelector("#audio-player-dictionary")
           : document.getElementById("audio-player-dictionary");
@@ -1950,7 +2204,11 @@ class DictionaryApp {
             "Phím tắt hữu ích",
           ];
 
-          this.audioPlayer = new AudioPlayer(container, audioFile, titles[stepNumber]);
+          this.audioPlayer = new AudioPlayer(
+            container,
+            audioFile,
+            titles[stepNumber]
+          );
           this.currentAudioIndex = stepNumber;
 
           // Auto-play the audio
@@ -2011,7 +2269,9 @@ class DictionaryApp {
       if (this.audioPlayer) {
         console.log("Auto-playing dictionary audio after user interaction...");
         this.audioPlayer.play().catch((error) => {
-          console.log("Auto-play blocked by browser. Click play button to start.");
+          console.log(
+            "Auto-play blocked by browser. Click play button to start."
+          );
         });
       }
       // Remove event listeners after first play
@@ -2030,9 +2290,21 @@ class DictionaryApp {
 
     const mockDictionary = {
       "vi-en": {
-        "xin chào": { target: "hello", type: "interjection", pronunciation: "/sin tʃaʊ/" },
-        "cảm ơn": { target: "thank you", type: "interjection", pronunciation: "/kɑmən/" },
-        "tạm biệt": { target: "goodbye", type: "interjection", pronunciation: "/tɑm biət/" },
+        "xin chào": {
+          target: "hello",
+          type: "interjection",
+          pronunciation: "/sin tʃaʊ/",
+        },
+        "cảm ơn": {
+          target: "thank you",
+          type: "interjection",
+          pronunciation: "/kɑmən/",
+        },
+        "tạm biệt": {
+          target: "goodbye",
+          type: "interjection",
+          pronunciation: "/tɑm biət/",
+        },
         bạn: { target: "you", type: "pronoun", pronunciation: "/bɑn/" },
         tôi: { target: "I", type: "pronoun", pronunciation: "/toj/" },
         làm: { target: "do", type: "verb", pronunciation: "/lɑm/" },
@@ -2042,18 +2314,42 @@ class DictionaryApp {
         cơm: { target: "rice", type: "noun", pronunciation: "/kəm/" },
       },
       "vi-fr": {
-        "xin chào": { target: "bonjour", type: "interjection", pronunciation: "/sin tʃaʊ/" },
-        "cảm ơn": { target: "merci", type: "interjection", pronunciation: "/kɑmən/" },
-        "tạm biệt": { target: "au revoir", type: "interjection", pronunciation: "/tɑm biệt/" },
+        "xin chào": {
+          target: "bonjour",
+          type: "interjection",
+          pronunciation: "/sin tʃaʊ/",
+        },
+        "cảm ơn": {
+          target: "merci",
+          type: "interjection",
+          pronunciation: "/kɑmən/",
+        },
+        "tạm biệt": {
+          target: "au revoir",
+          type: "interjection",
+          pronunciation: "/tɑm biệt/",
+        },
         bạn: { target: "vous", type: "pronoun", pronunciation: "/bɑn/" },
         tôi: { target: "je", type: "pronoun", pronunciation: "/toj/" },
         nước: { target: "eau", type: "noun", pronunciation: "/nuək/" },
         cơm: { target: "riz", type: "noun", pronunciation: "/kəm/" },
       },
       "vi-ja": {
-        "xin chào": { target: "こんにちは", type: "interjection", pronunciation: "/sin tʃaʊ/" },
-        "cảm ơn": { target: "ありがとう", type: "interjection", pronunciation: "/kɑm èn/" },
-        "tạm biệt": { target: "さようなら", type: "interjection", pronunciation: "/tɑm biệt/" },
+        "xin chào": {
+          target: "こんにちは",
+          type: "interjection",
+          pronunciation: "/sin tʃaʊ/",
+        },
+        "cảm ơn": {
+          target: "ありがとう",
+          type: "interjection",
+          pronunciation: "/kɑm èn/",
+        },
+        "tạm biệt": {
+          target: "さようなら",
+          type: "interjection",
+          pronunciation: "/tɑm biệt/",
+        },
       },
     };
 
@@ -2080,7 +2376,9 @@ class DictionaryApp {
       </div>
     `);
 
-    this.announceToScreenReader("Mock data đã được kích hoạt. Có thể bắt đầu tìm kiếm từ mẫu.");
+    this.announceToScreenReader(
+      "Mock data đã được kích hoạt. Có thể bắt đầu tìm kiếm từ mẫu."
+    );
   }
 
   // Check protocol and auto-enable mock data
@@ -2089,9 +2387,21 @@ class DictionaryApp {
       // Auto-enable mock data silently
       const mockDictionary = {
         "vi-en": {
-          "xin chào": { target: "hello", type: "interjection", pronunciation: "/sin tʃaʊ/" },
-          "cảm ơn": { target: "thank you", type: "interjection", pronunciation: "/kɑmən/" },
-          "tạm biệt": { target: "goodbye", type: "interjection", pronunciation: "/tɑm biệt/" },
+          "xin chào": {
+            target: "hello",
+            type: "interjection",
+            pronunciation: "/sin tʃaʊ/",
+          },
+          "cảm ơn": {
+            target: "thank you",
+            type: "interjection",
+            pronunciation: "/kɑmən/",
+          },
+          "tạm biệt": {
+            target: "goodbye",
+            type: "interjection",
+            pronunciation: "/tɑm biệt/",
+          },
           bạn: { target: "you", type: "pronoun", pronunciation: "/bɑn/" },
           tôi: { target: "I", type: "pronoun", pronunciation: "/toj/" },
           làm: { target: "do", type: "verb", pronunciation: "/lɑm/" },
@@ -2106,9 +2416,21 @@ class DictionaryApp {
           nhà: { target: "house", type: "noun", pronunciation: "/ɲɑ/" },
         },
         "vi-fr": {
-          "xin chào": { target: "bonjour", type: "interjection", pronunciation: "/sin tʃaʊ/" },
-          "cảm ơn": { target: "merci", type: "interjection", pronunciation: "/kɑmən/" },
-          "tạm biệt": { target: "au revoir", type: "interjection", pronunciation: "/tɑm biệt/" },
+          "xin chào": {
+            target: "bonjour",
+            type: "interjection",
+            pronunciation: "/sin tʃaʊ/",
+          },
+          "cảm ơn": {
+            target: "merci",
+            type: "interjection",
+            pronunciation: "/kɑmən/",
+          },
+          "tạm biệt": {
+            target: "au revoir",
+            type: "interjection",
+            pronunciation: "/tɑm biệt/",
+          },
           bạn: { target: "vous", type: "pronoun", pronunciation: "/bɑn/" },
           tôi: { target: "je", type: "pronoun", pronunciation: "/toj/" },
           nước: { target: "eau", type: "noun", pronunciation: "/nuək/" },
@@ -2117,9 +2439,21 @@ class DictionaryApp {
           nhà: { target: "maison", type: "noun", pronunciation: "/ɲɑ/" },
         },
         "vi-ja": {
-          "xin chào": { target: "こんにちは", type: "interjection", pronunciation: "/sin tʃaʊ/" },
-          "cảm ơn": { target: "ありがとう", type: "interjection", pronunciation: "/kɑm èn/" },
-          "tạm biệt": { target: "さようなら", type: "interjection", pronunciation: "/tɑm biệt/" },
+          "xin chào": {
+            target: "こんにちは",
+            type: "interjection",
+            pronunciation: "/sin tʃaʊ/",
+          },
+          "cảm ơn": {
+            target: "ありがとう",
+            type: "interjection",
+            pronunciation: "/kɑm èn/",
+          },
+          "tạm biệt": {
+            target: "さようなら",
+            type: "interjection",
+            pronunciation: "/tɑm biệt/",
+          },
           bạn: { target: "あなた", type: "pronoun", pronunciation: "/bɑn/" },
           tôi: { target: "私", type: "pronoun", pronunciation: "/toj/" },
         },
@@ -2257,9 +2591,9 @@ class DictionaryApp {
     const systemPrompt = `
 Bạn là một trợ lý từ điển thông minh. 
 Dưới đây là kết quả tra cứu gốc (result) cho từ khóa: '${searchTerm}' 
-(từ gốc: ${this.getLanguageName(this.selectedSourceLang)}, ngôn ngữ đích: ${this.getLanguageName(
-      this.selectedTargetLang
-    )}).
+(từ gốc: ${this.getLanguageName(
+      this.selectedSourceLang
+    )}, ngôn ngữ đích: ${this.getLanguageName(this.selectedTargetLang)}).
 
 Đây là kết quả search local:
 ${results}
